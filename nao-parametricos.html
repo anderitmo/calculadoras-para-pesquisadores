@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Testes não paramétricos | Matemática para Pesquisadores</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header compact"><div><p class="eyebrow"><a href="index.html">Matemática para Pesquisadores</a></p><h1>Testes não paramétricos</h1><p class="lede">Compare dois grupos ou duas medidas pareadas por postos, com Mann-Whitney U e Wilcoxon sinalizado.</p></div></header>
+  <main class="layout">
+    <nav class="sidebar" aria-label="Calculadoras"><a href="descritivas.html">Descritivas</a><a href="amostra.html">Tamanho amostral</a><a href="teste-t.html">Teste t</a><a class="active" href="nao-parametricos.html">Não paramétricos</a><a href="qui-quadrado.html">Qui-quadrado</a><a href="correlacao.html">Correlação</a><a href="regressao-linear.html">Regressão linear</a><a href="regressao-logistica.html">Regressão logística</a><a href="anova.html">ANOVA</a><a href="cronbach.html">Alfa de Cronbach</a><a href="epidemiologia.html">Epidemiologia 2x2</a></nav>
+    <section class="content">
+      <section id="nao-parametricos" class="tool" data-tool="nonparametric">
+        <div class="tool-heading"><div><h2>Dados por postos</h2><p>Escolha o teste e informe os dados brutos. Os cálculos usam aproximação normal com correção de continuidade.</p></div></div>
+        <div class="grid two">
+          <label>Tipo de teste<select id="np-type"><option value="mann">Mann-Whitney U independente</option><option value="wilcoxon">Wilcoxon pareado</option></select></label>
+          <label>Hipótese alternativa<select id="np-tail"><option value="two">Bilateral</option><option value="greater">Grupo 1 / diferenças maiores</option><option value="less">Grupo 1 / diferenças menores</option></select></label>
+        </div>
+        <div class="grid two">
+          <label>Grupo 1 / diferenças pareadas<textarea id="np-values-1" rows="6">12, 14, 13, 16, 11, 15, 17, 14</textarea></label>
+          <label class="np-second">Grupo 2<textarea id="np-values-2" rows="6">9, 11, 10, 13, 8, 12, 14, 10</textarea></label>
+        </div>
+        <p class="hint">Para Wilcoxon pareado, informe as diferenças pareadas no primeiro campo. Diferenças iguais a zero são removidas.</p>
+        <button class="primary" data-run="nonparametric">Calcular</button>
+        <div class="result" id="nonparametric-result"></div>
+      </section>
+      <section class="explain" aria-labelledby="np-explicacao">
+        <h2 id="np-explicacao">Como este cálculo ajuda</h2>
+        <div class="explain-grid">
+          <div><h3>O que calcula</h3><p>Compara dois grupos ou duas medidas relacionadas usando postos em vez dos valores originais.</p></div>
+          <div><h3>Contribuição acadêmica</h3><p>Ajuda quando os dados são ordinais, assimétricos, têm outliers ou não sustentam bem uma comparação paramétrica.</p></div>
+          <div><h3>Exemplo simples</h3><p>Comparar escores Likert de satisfação entre duas turmas ou diferenças antes/depois em uma escala ordinal.</p></div>
+        </div>
+      </section>
+      <section class="method-note" aria-labelledby="np-metodo">
+        <h2 id="np-metodo">Método, uso e referência</h2>
+        <dl>
+          <div><dt>Fórmulas centrais</dt><dd>Mann-Whitney usa <span class="formula">U</span> a partir da soma dos postos; Wilcoxon usa <span class="formula">W</span> pela soma dos postos positivos.</dd></div>
+          <div><dt>Quando usar</dt><dd>Use para comparação de dois grupos independentes ou pareados quando a escala é ordinal ou a distribuição é problemática.</dd></div>
+          <div><dt>Referências</dt><dd>Mann & Whitney, 1947; Wilcoxon, 1945; Hollander, Wolfe & Chicken. Nonparametric Statistical Methods.</dd></div>
+        </dl>
+      </section>
+    </section>
+  </main>
+  <footer class="footer"><p>Sem login e sem envio dos dados informados.</p></footer>
+  <script src="app.js"></script>
+</body>
+</html>

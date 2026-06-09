@@ -207,6 +207,23 @@ function validateVector(values, label, minN = 2) {
   if (sampleSd(values) === 0) throw new Error(`${label} tem variância zero; o teste não pode ser calculado.`);
 }
 
+function sortedValues(values) {
+  return [...values].sort((a, b) => a - b);
+}
+
+function quantile(values, q) {
+  const sorted = sortedValues(values);
+  const pos = (sorted.length - 1) * q;
+  const lower = Math.floor(pos);
+  const upper = Math.ceil(pos);
+  if (lower === upper) return sorted[lower];
+  return sorted[lower] + (sorted[upper] - sorted[lower]) * (pos - lower);
+}
+
+function median(values) {
+  return quantile(values, 0.5);
+}
+
 function renderResult(targetId, metrics, markdown, assumptions = [], extraHtml = "") {
   const target = $(targetId);
   const metricHtml = metrics.map(([label, value]) => `<div class="metric"><span>${label}</span><strong>${value}</strong></div>`).join("");
@@ -473,6 +490,22 @@ function rank(values) {
   return ranks;
 }
 
+function rankWithTies(values) {
+  const sorted = values.map((v, i) => ({ v, i })).sort((a, b) => a.v - b.v);
+  const ranks = Array(values.length);
+  const ties = [];
+  for (let i = 0; i < sorted.length;) {
+    let j = i + 1;
+    while (j < sorted.length && sorted[j].v === sorted[i].v) j++;
+    const size = j - i;
+    const r = (i + j + 1) / 2;
+    for (let k = i; k < j; k++) ranks[sorted[k].i] = r;
+    if (size > 1) ties.push(size);
+    i = j;
+  }
+  return { ranks, ties };
+}
+
 function correlation(x, y) {
   const n = x.length;
   const mx = x.reduce((a, b) => a + b, 0) / n;
@@ -688,6 +721,145 @@ function runCronbach() {
   renderResult("cronbach-result", [["α", fmt(alpha)], ["itens", fmt(k, 0)], ["respondentes", fmt(n, 0)]], md, alerts, extra);
 }
 
+function runDescriptive() {
+  const values = parseVector($("desc-values").value);
+  validateVector(values, "Valores", 3);
+  const n = values.length;
+  const avg = mean(values);
+  const sd = sampleSd(values);
+  const se = sd / Math.sqrt(n);
+  const tcrit = invTCdf(0.975, n - 1);
+  const ci = [avg - tcrit * se, avg + tcrit * se];
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const q1 = quantile(values, 0.25);
+  const med = median(values);
+  const q3 = quantile(values, 0.75);
+  const iqr = q3 - q1;
+  const lowerFence = q1 - 1.5 * iqr;
+  const upperFence = q3 + 1.5 * iqr;
+  const outliers = values.filter((value) => value < lowerFence || value > upperFence);
+  const m2 = values.reduce((sum, value) => sum + (value - avg) ** 2, 0) / n;
+  const m3 = values.reduce((sum, value) => sum + (value - avg) ** 3, 0) / n;
+  const m4 = values.reduce((sum, value) => sum + (value - avg) ** 4, 0) / n;
+  const skew = m3 / Math.pow(m2, 1.5);
+  const kurtExcess = m4 / (m2 ** 2) - 3;
+  const jb = (n / 6) * (skew ** 2 + (kurtExcess ** 2) / 4);
+  const jbP = chiSquarePValue(jb, 2);
+  const cv = sd / Math.abs(avg);
+  const rows = [
+    ["n", fmt(n, 0)],
+    ["Média", fmt(avg)],
+    ["IC95% da média", `[${fmt(ci[0])}, ${fmt(ci[1])}]`],
+    ["Mediana", fmt(med)],
+    ["DP", fmt(sd)],
+    ["Erro-padrão", fmt(se)],
+    ["Mínimo", fmt(min)],
+    ["Q1", fmt(q1)],
+    ["Q3", fmt(q3)],
+    ["Máximo", fmt(max)],
+    ["IQR", fmt(iqr)],
+    ["Coeficiente de variação", Number.isFinite(cv) ? pct(cv) : "NA"],
+    ["Assimetria", fmt(skew)],
+    ["Curtose excessiva", fmt(kurtExcess)],
+    ["Jarque-Bera", `${fmt(jb)}; p=${fmt(jbP, 5)}`],
+    ["Outliers 1,5×IQR", outliers.length ? outliers.map((value) => fmt(value)).join(", ") : "nenhum"]
+  ];
+  const normalHint = jbP < 0.05 ? "há indício de afastamento da normalidade pelo Jarque-Bera" : "não houve indício forte de afastamento da normalidade pelo Jarque-Bera";
+  const alerts = [
+    "Descritivas devem ser interpretadas junto com gráfico, contexto e qualidade da coleta.",
+    "Jarque-Bera é uma triagem baseada em assimetria e curtose; não substitui inspeção visual nem análise dos pressupostos do teste final.",
+    "Outliers pela regra 1,5×IQR são pontos para revisão, não valores a remover automaticamente."
+  ];
+  if (n < 20) alerts.push("A amostra é pequena; indicadores de normalidade e curtose podem oscilar bastante.");
+  if (outliers.length) alerts.push(`Foram identificados ${outliers.length} possível(is) outlier(s) pela regra 1,5×IQR.`);
+  if (Math.abs(skew) > 1) alerts.push("A assimetria absoluta é maior que 1; considere mediana/IQR e métodos robustos ou não paramétricos.");
+
+  const md = `## Estatísticas descritivas\n\n- n: **${n}**.\n- Média: **${fmt(avg)}**, IC95% **[${fmt(ci[0])}, ${fmt(ci[1])}]**.\n- Mediana: **${fmt(med)}**.\n- DP: **${fmt(sd)}**.\n- Mínimo-Máximo: **${fmt(min)} a ${fmt(max)}**.\n- Q1-Q3: **${fmt(q1)} a ${fmt(q3)}**; IQR = **${fmt(iqr)}**.\n- Assimetria: **${fmt(skew)}**.\n- Curtose excessiva: **${fmt(kurtExcess)}**.\n- Jarque-Bera: **${fmt(jb)}**, p = **${fmt(jbP, 5)}**; ${normalHint}.\n- Outliers pela regra 1,5×IQR: **${outliers.length ? outliers.map((value) => fmt(value)).join(", ") : "nenhum"}**.\n\n### Tabela resumo\n\n${namedTableMarkdown(["Medida", "Valor"], rows)}\n\n> Relato sugerido: a variável apresentou média ${fmt(avg)} (DP = ${fmt(sd)}) e mediana ${fmt(med)} [Q1 = ${fmt(q1)}; Q3 = ${fmt(q3)}]. ${normalHint}.`;
+  const extra = `<div class="diagnostics">
+    ${namedTableHtml("Resumo descritivo", ["Medida", "Valor"], rows, { compact: true })}
+  </div>`;
+  renderResult("descriptive-result", [["média", fmt(avg)], ["mediana", fmt(med)], ["DP", fmt(sd)]], md, alerts, extra);
+}
+
+function normalPFromZ(z, tail) {
+  const cdf = normalCdf(z);
+  if (tail === "greater") return 1 - cdf;
+  if (tail === "less") return cdf;
+  return Math.min(1, 2 * Math.min(cdf, 1 - cdf));
+}
+
+function continuityAdjustedZ(stat, meanStat, sdStat) {
+  const corrected = stat > meanStat ? stat - 0.5 : stat < meanStat ? stat + 0.5 : stat;
+  return (corrected - meanStat) / sdStat;
+}
+
+function runNonparametric() {
+  const type = $("np-type").value;
+  const tail = $("np-tail").value;
+  const alerts = [
+    "Testes não paramétricos por postos não dispensam avaliação do desenho, independência e qualidade dos dados.",
+    "Os p-valores usam aproximação normal com correção de continuidade; amostras muito pequenas podem exigir cálculo exato."
+  ];
+
+  if (type === "mann") {
+    const g1 = parseVector($("np-values-1").value);
+    const g2 = parseVector($("np-values-2").value);
+    validateVector(g1, "Grupo 1", 2);
+    validateVector(g2, "Grupo 2", 2);
+    const combined = [...g1.map((value) => ({ value, group: 1 })), ...g2.map((value) => ({ value, group: 2 }))];
+    const { ranks, ties } = rankWithTies(combined.map((item) => item.value));
+    const n1 = g1.length;
+    const n2 = g2.length;
+    const n = n1 + n2;
+    const r1 = ranks.reduce((sum, rankValue, i) => sum + (combined[i].group === 1 ? rankValue : 0), 0);
+    const u1 = r1 - n1 * (n1 + 1) / 2;
+    const u2 = n1 * n2 - u1;
+    const meanU = n1 * n2 / 2;
+    const tieCorrection = ties.reduce((sum, t) => sum + (t ** 3 - t), 0);
+    const varU = (n1 * n2 / 12) * ((n + 1) - tieCorrection / (n * (n - 1)));
+    const z = continuityAdjustedZ(u1, meanU, Math.sqrt(varU));
+    const p = normalPFromZ(z, tail);
+    const effect = Math.abs(z) / Math.sqrt(n);
+    const cl = u1 / (n1 * n2);
+    if (Math.min(n1, n2) < 10) alerts.push("Há grupo com menos de 10 observações; considere confirmar por método exato.");
+    if (ties.length) alerts.push("Há empates nos dados; os postos médios e correção de empates foram aplicados.");
+    const rows = [
+      ["Grupo 1", fmt(n1, 0), fmt(mean(g1)), fmt(median(g1)), fmt(r1), fmt(u1)],
+      ["Grupo 2", fmt(n2, 0), fmt(mean(g2)), fmt(median(g2)), fmt(ranks.reduce((sum, rankValue, i) => sum + (combined[i].group === 2 ? rankValue : 0), 0)), fmt(u2)]
+    ];
+    const md = `## Mann-Whitney U\n\n- n grupo 1: **${n1}**; n grupo 2: **${n2}**.\n- U grupo 1: **${fmt(u1)}**; U grupo 2: **${fmt(u2)}**.\n- Estatística z: **${fmt(z)}**.\n- p-valor: **${fmt(p, 5)}**.\n- Tamanho de efeito r: **${fmt(effect)}**.\n- Probabilidade comum aproximada: **${pct(cl)}**.\n\n### Resumo por grupo\n\n${namedTableMarkdown(["Grupo", "n", "Média", "Mediana", "Soma postos", "U"], rows)}\n\n> Relato sugerido: o teste de Mann-Whitney indicou U = ${fmt(u1)}, z = ${fmt(z)}, p = ${fmt(p, 5)}, r = ${fmt(effect)}.`;
+    const extra = `<div class="diagnostics">${namedTableHtml("Resumo por grupo", ["Grupo", "n", "Média", "Mediana", "Soma postos", "U"], rows, { compact: true })}</div>`;
+    renderResult("nonparametric-result", [["U", fmt(u1)], ["z", fmt(z)], ["p", fmt(p, 5)]], md, alerts, extra);
+    return;
+  }
+
+  const rawDiffs = parseVector($("np-values-1").value);
+  if (rawDiffs.length < 3 || rawDiffs.some((value) => !Number.isFinite(value))) throw new Error("Informe pelo menos 3 diferenças pareadas válidas.");
+  const diffs = rawDiffs.filter((value) => value !== 0);
+  if (diffs.length < 3) throw new Error("Após remover diferenças zero, restaram menos de 3 pares válidos.");
+  const absDiffs = diffs.map(Math.abs);
+  const { ranks, ties } = rankWithTies(absDiffs);
+  const wPlus = ranks.reduce((sum, rankValue, i) => sum + (diffs[i] > 0 ? rankValue : 0), 0);
+  const wMinus = ranks.reduce((sum, rankValue, i) => sum + (diffs[i] < 0 ? rankValue : 0), 0);
+  const n = diffs.length;
+  const meanW = n * (n + 1) / 4;
+  const tieCorrection = ties.reduce((sum, t) => sum + (t ** 3 - t), 0) / 48;
+  const varW = n * (n + 1) * (2 * n + 1) / 24 - tieCorrection;
+  const z = continuityAdjustedZ(wPlus, meanW, Math.sqrt(varW));
+  const p = normalPFromZ(z, tail);
+  const effect = Math.abs(z) / Math.sqrt(n);
+  const positive = diffs.filter((value) => value > 0).length;
+  const negative = diffs.filter((value) => value < 0).length;
+  if (rawDiffs.length !== diffs.length) alerts.push(`${rawDiffs.length - diffs.length} diferença(s) igual(is) a zero foram removidas.`);
+  if (n < 10) alerts.push("Há menos de 10 pares não nulos; considere confirmar por método exato.");
+  if (ties.length) alerts.push("Há empates nos valores absolutos das diferenças; postos médios foram aplicados.");
+  const rows = diffs.map((value, i) => [`Par ${i + 1}`, fmt(value), fmt(Math.abs(value)), fmt(ranks[i]), value > 0 ? "positiva" : "negativa"]);
+  const md = `## Wilcoxon pareado\n\n- Pares não nulos: **${n}**.\n- Diferenças positivas: **${positive}**; negativas: **${negative}**.\n- W+: **${fmt(wPlus)}**; W-: **${fmt(wMinus)}**.\n- Estatística z: **${fmt(z)}**.\n- p-valor: **${fmt(p, 5)}**.\n- Tamanho de efeito r: **${fmt(effect)}**.\n\n### Postos das diferenças\n\n${namedTableMarkdown(["Par", "Diferença", "|Dif.|", "Posto", "Sinal"], rows)}\n\n> Relato sugerido: o teste de Wilcoxon pareado indicou W+ = ${fmt(wPlus)}, z = ${fmt(z)}, p = ${fmt(p, 5)}, r = ${fmt(effect)}.`;
+  const extra = `<div class="diagnostics">${namedTableHtml("Postos das diferenças", ["Par", "Diferença", "|Dif.|", "Posto", "Sinal"], rows, { compact: true })}</div>`;
+  renderResult("nonparametric-result", [["W+", fmt(wPlus)], ["z", fmt(z)], ["p", fmt(p, 5)]], md, alerts, extra);
+}
+
 function meanPlotSvg(groups) {
   const width = 640;
   const height = 320;
@@ -900,6 +1072,93 @@ function runEpi() {
   ]);
 }
 
+function logisticProbability(x, beta0, beta1) {
+  const exponent = beta0 + beta1 * x;
+  if (exponent > 100) return 1;
+  if (exponent < -100) return 0;
+  return 1 / (1 + Math.exp(-exponent));
+}
+
+function runLogistic() {
+  const xName = $("log-x-name").value.trim() || "X";
+  const yName = $("log-y-name").value.trim() || "Evento";
+  const pairs = parseMatrix($("log-pairs").value);
+  if (pairs.length < 3 || pairs.some((row) => row.length !== 2 || row.some((v) => !Number.isFinite(v)))) {
+    throw new Error("Informe pelo menos 3 pares numéricos x,y.");
+  }
+  const x = pairs.map((p) => p[0]);
+  const y = pairs.map((p) => p[1]);
+  validateVector(x, "Valores de X", 3);
+  
+  if (y.some((v) => v !== 0 && v !== 1)) throw new Error("A variável Y deve conter apenas 0 (ausência) ou 1 (presença do evento).");
+  if (y.every((v) => v === 0) || y.every((v) => v === 1)) throw new Error("A variável Y precisa ter variabilidade (tanto 0 quanto 1).");
+
+  const n = x.length;
+  const xMean = mean(x);
+  const yMean = mean(y);
+  
+  let beta0 = Math.log(yMean / (1 - yMean));
+  let beta1 = 0;
+  const maxIter = 50;
+  const tol = 1e-8;
+
+  for (let iter = 0; iter < maxIter; iter++) {
+    const probs = x.map((xi) => logisticProbability(xi, beta0, beta1));
+    const weights = probs.map((p) => p * (1 - p));
+    const sumW = weights.reduce((a, b) => a + b, 0);
+    const sumWx = weights.reduce((sum, w, i) => sum + w * x[i], 0);
+    const sumWxx = weights.reduce((sum, w, i) => sum + w * x[i] * x[i], 0);
+    
+    const resid = y.map((yi, i) => yi - probs[i]);
+    const sumWResid = weights.reduce((sum, w, i) => sum + w * resid[i], 0);
+    const sumWxResid = weights.reduce((sum, w, i) => sum + w * x[i] * resid[i], 0);
+
+    const denom = sumW * sumWxx - sumWx * sumWx;
+    if (Math.abs(denom) < 1e-12) break;
+
+    const newBeta0 = beta0 + (sumWxx * sumWResid - sumWx * sumWxResid) / denom;
+    const newBeta1 = beta1 + (sumW * sumWxResid - sumWx * sumWResid) / denom;
+    
+    if (Math.abs(newBeta0 - beta0) < tol && Math.abs(newBeta1 - beta1) < tol) break;
+    beta0 = newBeta0;
+    beta1 = newBeta1;
+  }
+
+  const probs = x.map((xi) => logisticProbability(xi, beta0, beta1));
+  const ll = y.reduce((sum, yi, i) => sum + (yi * Math.log(Math.max(probs[i], 1e-10)) + (1 - yi) * Math.log(Math.max(1 - probs[i], 1e-10))), 0);
+  const weights = probs.map((p) => p * (1 - p));
+  const sumWxx = weights.reduce((sum, w, i) => sum + w * x[i] * x[i], 0);
+  const sumWx = weights.reduce((sum, w, i) => sum + w * x[i], 0);
+  const sumW = weights.reduce((a, b) => a + b, 0);
+  const varBeta1 = sumW / (sumW * sumWxx - sumWx * sumWx);
+  const seBeta1 = Math.sqrt(Math.max(0, varBeta1));
+  
+  const z = beta1 / (seBeta1 + 1e-10);
+  const pValue = 2 * (1 - normalCdf(Math.abs(z)));
+  
+  const or = Math.exp(beta1);
+  const orCiLow = Math.exp(beta1 - 1.959963984540054 * seBeta1);
+  const orCiHigh = Math.exp(beta1 + 1.959963984540054 * seBeta1);
+  const betaCiLow = beta1 - 1.959963984540054 * seBeta1;
+  const betaCiHigh = beta1 + 1.959963984540054 * seBeta1;
+
+  const predictions = x.map((xi, i) => ({
+    x: xi,
+    y: y[i],
+    pred: logisticProbability(xi, beta0, beta1),
+    residual: y[i] - logisticProbability(xi, beta0, beta1)
+  }));
+
+  const significance = pValue < 0.05 ? "estatisticamente significativo ao nível de 5%" : "não estatisticamente significativo ao nível de 5%";
+  const md = `## Regressão Logística\n\n- Variável explicativa: **${xName}**.\n- Variável resposta (evento): **${yName}**.\n- n: **${n}**.\n- Casos com evento: **${y.filter((v) => v === 1).length}**.\n- Intercepto β₀: **${fmt(beta0)}**.\n- Coeficiente β₁: **${fmt(beta1)}**, IC95% **[${fmt(betaCiLow)}, ${fmt(betaCiHigh)}]**.\n- Erro padrão β₁: **${fmt(seBeta1)}**.\n- Estatística z: **${fmt(z)}**.\n- p-valor: **${fmt(pValue, 5)}** (${significance}).\n- **Odds Ratio: ${fmt(or)}**, IC95% **[${fmt(orCiLow)}, ${fmt(orCiHigh)}]**.\n- Log-verossimilhança: **${fmt(ll)}**.\n\n### Interpretação do OR\n- Cada aumento de 1 unidade em **${xName}** multiplica a odds de **${yName}** por **${fmt(or)}**.\n- Aumento na odds: **${fmt((or - 1) * 100)}%** por unidade de **${xName}**.\n\n### Predições\n\n| # | ${xName} | ${yName} (obs.) | P(${yName}=1) | Resíduo |\n| --- | --- | --- | --- | --- |\n${predictions.map((p, i) => `| ${i + 1} | ${fmt(p.x)} | ${p.y} | ${fmt(p.pred)} | ${fmt(p.residual)} |`).join("\\n")}\n\n> Relato sugerido: a regressão logística indicou que cada unidade de aumento em **${xName}** está associada a um OR de **${fmt(or)}** (IC95% [${fmt(orCiLow)}, ${fmt(orCiHigh)}]), z = ${fmt(z)}, p = ${fmt(pValue, 5)}.`;
+  
+  renderResult("logistic-result", [["β₁", fmt(beta1)], ["OR", fmt(or)], ["p", fmt(pValue, 5)]], md, [
+    "Regressão logística assume relação linear no logit; a reta não passa pelos pontos observados, mas modela a probabilidade.",
+    "Odds ratio interpreta-se como multiplicação da odds a cada unidade de X.",
+    "Com n pequeno ou separação completa, o modelo pode ser instável; revise dados e diagnósticos."
+  ]);
+}
+
 function syncVisibility() {
   const sampleSelect = $("sample-type");
   if (sampleSelect) {
@@ -930,14 +1189,23 @@ function syncVisibility() {
     if (expected) expected.classList.toggle("is-hidden", chiType !== "goodness");
     if (yates) yates.closest("label").classList.toggle("is-hidden", chiType !== "independence");
   }
+
+  const npSelect = $("np-type");
+  if (npSelect) {
+    const second = document.querySelector(".np-second");
+    if (second) second.classList.toggle("is-hidden", npSelect.value !== "mann");
+  }
 }
 
 const handlers = {
+  descriptive: runDescriptive,
   sample: sampleSize,
   ttest: runTTest,
+  nonparametric: runNonparametric,
   chi: runChi,
   correlation: runCorrelation,
   regression: runRegression,
+  logistic: runLogistic,
   anova: runAnova,
   cronbach: runCronbach,
   epi: runEpi
@@ -969,7 +1237,7 @@ document.querySelectorAll("[data-run]").forEach((button) => {
     try {
       handlers[tool]();
     } catch (error) {
-      const resultIds = { correlation: "cor-result", regression: "regression-result", anova: "anova-result", cronbach: "cronbach-result" };
+      const resultIds = { descriptive: "descriptive-result", nonparametric: "nonparametric-result", correlation: "cor-result", regression: "regression-result", logistic: "logistic-result", anova: "anova-result", cronbach: "cronbach-result" };
       renderError(resultIds[tool] ?? `${tool}-result`, error);
     }
   });

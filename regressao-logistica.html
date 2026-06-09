@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Regressão Logística | Matemática para Pesquisadores</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header compact"><div><p class="eyebrow"><a href="index.html">Matemática para Pesquisadores</a></p><h1>Regressão Logística</h1><p class="lede">Estime a probabilidade de um evento binário (sim/não) em função de uma variável explicativa, com odds ratio, IC, p-valor e curva ROC.</p></div></header>
+  <main class="layout">
+    <nav class="sidebar" aria-label="Calculadoras"><a href="descritivas.html">Descritivas</a><a href="amostra.html">Tamanho amostral</a><a href="teste-t.html">Teste t</a><a href="nao-parametricos.html">Não paramétricos</a><a href="qui-quadrado.html">Qui-quadrado</a><a href="correlacao.html">Correlação</a><a href="regressao-linear.html">Regressão linear</a><a class="active" href="regressao-logistica.html">Regressão logística</a><a href="anova.html">ANOVA</a><a href="cronbach.html">Alfa de Cronbach</a><a href="epidemiologia.html">Epidemiologia 2x2</a></nav>
+    <section class="content">
+      <section id="logistica" class="tool" data-tool="logistic">
+        <div class="tool-heading"><div><h2>Dados pareados</h2><p>Informe pares x,y em linhas separadas. X é a variável explicativa; Y é 0 (ausência do evento) ou 1 (presença do evento).</p></div></div>
+        <div class="grid two">
+          <label>Nome de X<input id="log-x-name" type="text" value="Exposição"></label>
+          <label>Nome de Y<input id="log-y-name" type="text" value="Desfecho"></label>
+        </div>
+        <label class="wide">Pares x,y<textarea id="log-pairs" rows="8">1, 0
+2, 0
+3, 1
+4, 0
+5, 1
+6, 1
+7, 1
+8, 1
+9, 1
+10, 1</textarea></label>
+        <p class="hint">Use vírgula ou espaço como separador. A variável Y deve conter apenas 0 ou 1.</p>
+        <button class="primary" data-run="logistic">Calcular</button>
+        <div class="result" id="logistic-result"></div>
+      </section>
+      <section class="explain" aria-labelledby="log-explicacao">
+        <h2 id="log-explicacao">Como este cálculo ajuda</h2>
+        <div class="explain-grid">
+          <div>
+            <h3>O que calcula</h3>
+            <p>Estima a relação entre uma variável explicativa contínua e a probabilidade de ocorrência de um evento binário (desfecho sim/não).</p>
+          </div>
+          <div>
+            <h3>Contribuição acadêmica</h3>
+            <p>Permite quantificar risco, construir modelos preditivos e relatar odds ratio com intervalo de confiança em estudos clínicos, epidemiológicos e comportamentais.</p>
+          </div>
+          <div>
+            <h3>Exemplo simples</h3>
+            <p>Um pesquisador avalia se o aumento da idade prediz a probabilidade de um participante ter uma condição de saúde.</p>
+          </div>
+        </div>
+      </section>
+      <section class="method-note" aria-labelledby="log-metodo">
+        <h2 id="log-metodo">Método, uso e referência</h2>
+        <dl>
+          <div><dt>Fórmula central</dt><dd><span class="formula">P(Y=1) = 1 / (1 + e^(-β₀ - β₁X))</span>, estimada por máxima verossimilhança.</dd></div>
+          <div><dt>Interpretação</dt><dd>O coeficiente β₁ representa o log da odds ratio. Odds ratio = e^β₁: cada unidade de aumento em X multiplica a odds do evento por e^β₁.</dd></div>
+          <div><dt>Quando usar</dt><dd>Use quando a variável resposta é binária (dois valores possíveis). Com múltiplas variáveis explicativas, considere modelos multivariados formais.</dd></div>
+          <div><dt>Referências</dt><dd>Hosmer & Lemeshow. Applied Logistic Regression; Agresti, A. An Introduction to Categorical Data Analysis.</dd></div>
+        </dl>
+      </section>
+    </section>
+  </main>
+  <footer class="footer"><p>Sem login e sem envio dos dados informados.</p></footer>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Descritivas e normalidade | Matemática para Pesquisadores</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header compact"><div><p class="eyebrow"><a href="index.html">Matemática para Pesquisadores</a></p><h1>Descritivas e normalidade</h1><p class="lede">Resuma uma variável quantitativa com média, mediana, dispersão, quartis, IC95%, assimetria, curtose e triagem de outliers.</p></div></header>
+  <main class="layout">
+    <nav class="sidebar" aria-label="Calculadoras"><a class="active" href="descritivas.html">Descritivas</a><a href="amostra.html">Tamanho amostral</a><a href="teste-t.html">Teste t</a><a href="nao-parametricos.html">Não paramétricos</a><a href="qui-quadrado.html">Qui-quadrado</a><a href="correlacao.html">Correlação</a><a href="regressao-linear.html">Regressão linear</a><a href="regressao-logistica.html">Regressão logística</a><a href="anova.html">ANOVA</a><a href="cronbach.html">Alfa de Cronbach</a><a href="epidemiologia.html">Epidemiologia 2x2</a></nav>
+    <section class="content">
+      <section id="descritivas" class="tool" data-tool="descriptive">
+        <div class="tool-heading"><div><h2>Dados numéricos</h2><p>Informe os valores de uma variável quantitativa. Os dados são processados localmente no navegador.</p></div></div>
+        <label class="wide">Valores<textarea id="desc-values" rows="7">72, 75, 70, 78, 74, 73, 80, 82, 79, 85, 83, 81, 76, 78, 77, 80, 79, 75</textarea></label>
+        <p class="hint">Use vírgula, espaço, ponto e vírgula ou quebra de linha para separar os valores.</p>
+        <button class="primary" data-run="descriptive">Calcular</button>
+        <div class="result" id="descriptive-result"></div>
+      </section>
+      <section class="explain" aria-labelledby="desc-explicacao">
+        <h2 id="desc-explicacao">Como este cálculo ajuda</h2>
+        <div class="explain-grid">
+          <div><h3>O que calcula</h3><p>Resume tendência central, dispersão, posição e forma da distribuição de uma variável quantitativa.</p></div>
+          <div><h3>Contribuição acadêmica</h3><p>Ajuda a descrever a amostra, escolher testes adequados e identificar valores extremos antes da análise inferencial.</p></div>
+          <div><h3>Exemplo simples</h3><p>Antes de comparar grupos, um estudante descreve as notas por média, DP, mediana e intervalo interquartil.</p></div>
+        </div>
+      </section>
+      <section class="method-note" aria-labelledby="desc-metodo">
+        <h2 id="desc-metodo">Método, uso e referência</h2>
+        <dl>
+          <div><dt>Fórmulas centrais</dt><dd><span class="formula">IC95% = média ± t crítico · EP</span>; <span class="formula">IQR = Q3 - Q1</span>; outliers pela regra <span class="formula">1,5 × IQR</span>.</dd></div>
+          <div><dt>Quando usar</dt><dd>Use no início da análise para conhecer os dados. Normalidade deve ser avaliada por múltiplos sinais, não por um único número.</dd></div>
+          <div><dt>Referências</dt><dd>Tukey. Exploratory Data Analysis; Altman. Practical Statistics for Medical Research.</dd></div>
+        </dl>
+      </section>
+    </section>
+  </main>
+  <footer class="footer"><p>Sem login e sem envio dos dados informados.</p></footer>
+  <script src="app.js"></script>
+</body>
+</html>
+
