@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Epidemiologia 2x2 | Matemática para Pesquisadores</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header compact"><div><p class="eyebrow"><a href="index.html">Matemática para Pesquisadores</a></p><h1>Epidemiologia 2x2</h1><p class="lede">Odds ratio, risco relativo, diferença de riscos, NNT/NNH, IC e qui-quadrado.</p></div></header>
+  <main class="layout">
+    <nav class="sidebar" aria-label="Calculadoras"><a href="amostra.html">Tamanho amostral</a><a href="teste-t.html">Teste t</a><a href="qui-quadrado.html">Qui-quadrado</a><a href="correlacao.html">Correlação</a><a href="regressao-linear.html">Regressão linear</a><a href="anova.html">ANOVA</a><a href="cronbach.html">Alfa de Cronbach</a><a class="active" href="epidemiologia.html">Epidemiologia 2x2</a></nav>
+    <section class="content">
+      <section id="epidemiologia" class="tool" data-tool="epi">
+        <div class="tool-heading"><div><h2>Tabela 2x2</h2><p>Informe frequências absolutas para grupos expostos e não expostos.</p></div></div>
+        <div class="table-input" aria-label="Tabela 2 por 2">
+          <span></span><strong>Evento</strong><strong>Sem evento</strong>
+          <strong>Exposto</strong><input id="epi-a" type="number" min="0" step="1" value="18"><input id="epi-b" type="number" min="0" step="1" value="12">
+          <strong>Não exposto</strong><input id="epi-c" type="number" min="0" step="1" value="7"><input id="epi-d" type="number" min="0" step="1" value="23">
+        </div>
+        <button class="primary" data-run="epi">Calcular</button>
+        <div class="result" id="epi-result"></div>
+      </section>
+      <section class="explain" aria-labelledby="epi-explicacao">
+        <h2 id="epi-explicacao">Como este cálculo ajuda</h2>
+        <div class="explain-grid">
+          <div>
+            <h3>O que calcula</h3>
+            <p>Calcula risco relativo, odds ratio, diferença absoluta de riscos, NNT ou NNH e associação qui-quadrado em uma tabela 2x2.</p>
+          </div>
+          <div>
+            <h3>Contribuição acadêmica</h3>
+            <p>Ajuda a medir força de associação, impacto absoluto e relevância prática em estudos clínicos, epidemiológicos ou observacionais.</p>
+          </div>
+          <div>
+            <h3>Exemplo simples</h3>
+            <p>Um estudo compara a ocorrência de um desfecho entre participantes expostos e não expostos a determinado fator.</p>
+          </div>
+        </div>
+      </section>
+      <section class="method-note" aria-labelledby="epi-metodo">
+        <h2 id="epi-metodo">Método, uso e referência</h2>
+        <dl>
+          <div><dt>Fórmula central</dt><dd><span class="formula">RR = risco exposto / risco não exposto</span> e <span class="formula">OR = (a·d)/(b·c)</span>.</dd></div>
+          <div><dt>Quando usar</dt><dd>Use RR em coorte ou estudos que estimam risco. Em caso-controle, prefira OR e evite interpretar como risco relativo direto.</dd></div>
+          <div><dt>Referências</dt><dd>Rothman, Greenland & Lash. Modern Epidemiology; Altman. Practical Statistics for Medical Research.</dd></div>
+        </dl>
+      </section>
+    </section>
+  </main>
+  <footer class="footer"><p>Sem login e sem envio dos dados informados.</p></footer>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Regressão linear simples | Matemática para Pesquisadores</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header compact"><div><p class="eyebrow"><a href="index.html">Matemática para Pesquisadores</a></p><h1>Regressão linear simples</h1><p class="lede">Estime a relação entre uma variável explicativa e uma variável resposta, com equação, R², IC, p-valor e resíduos.</p></div></header>
+  <main class="layout">
+    <nav class="sidebar" aria-label="Calculadoras"><a href="amostra.html">Tamanho amostral</a><a href="teste-t.html">Teste t</a><a href="qui-quadrado.html">Qui-quadrado</a><a href="correlacao.html">Correlação</a><a class="active" href="regressao-linear.html">Regressão linear</a><a href="anova.html">ANOVA</a><a href="cronbach.html">Alfa de Cronbach</a><a href="epidemiologia.html">Epidemiologia 2x2</a></nav>
+    <section class="content">
+      <section id="regressao" class="tool" data-tool="regression">
+        <div class="tool-heading"><div><h2>Dados pareados</h2><p>Informe pares x,y em linhas separadas. A primeira coluna é a variável explicativa e a segunda é a resposta.</p></div></div>
+        <div class="grid two">
+          <label>Nome de X<input id="reg-x-name" type="text" value="Horas de estudo"></label>
+          <label>Nome de Y<input id="reg-y-name" type="text" value="Nota final"></label>
+        </div>
+        <label class="wide">Pares x,y<textarea id="reg-pairs" rows="7">2, 5.8
+4, 6.4
+5, 7.1
+7, 8.0
+8, 8.5
+10, 9.1
+11, 9.4</textarea></label>
+        <button class="primary" data-run="regression">Calcular</button>
+        <div class="result" id="regression-result"></div>
+      </section>
+      <section class="explain" aria-labelledby="reg-explicacao">
+        <h2 id="reg-explicacao">Como este cálculo ajuda</h2>
+        <div class="explain-grid">
+          <div>
+            <h3>O que calcula</h3>
+            <p>Estima uma reta que descreve quanto a variável resposta tende a mudar quando a variável explicativa aumenta uma unidade.</p>
+          </div>
+          <div>
+            <h3>Contribuição acadêmica</h3>
+            <p>Ajuda a quantificar associação, construir modelos preditivos simples e relatar tamanho do efeito com intervalo de confiança.</p>
+          </div>
+          <div>
+            <h3>Exemplo simples</h3>
+            <p>Um pesquisador avalia se horas de estudo predizem a nota final de uma turma.</p>
+          </div>
+        </div>
+      </section>
+      <section class="method-note" aria-labelledby="reg-metodo">
+        <h2 id="reg-metodo">Método, uso e referência</h2>
+        <dl>
+          <div><dt>Fórmula central</dt><dd><span class="formula">Y = β0 + β1X</span>, ajustada por mínimos quadrados ordinários.</dd></div>
+          <div><dt>Quando usar</dt><dd>Use quando a relação esperada for aproximadamente linear. Evite extrapolar para valores de X fora da faixa observada.</dd></div>
+          <div><dt>Referências</dt><dd>Galton, 1886; Fisher, R. A. Statistical Methods for Research Workers; Kutner et al. Applied Linear Statistical Models.</dd></div>
+        </dl>
+      </section>
+    </section>
+  </main>
+  <footer class="footer"><p>Sem login e sem envio dos dados informados.</p></footer>
+  <script src="app.js"></script>
+</body>
+</html>

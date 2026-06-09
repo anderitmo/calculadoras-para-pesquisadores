@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Correlação | Matemática para Pesquisadores</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header compact"><div><p class="eyebrow"><a href="index.html">Matemática para Pesquisadores</a></p><h1>Correlação</h1><p class="lede">Pearson ou Spearman a partir de pares brutos, com IC de Fisher e significância.</p></div></header>
+  <main class="layout">
+    <nav class="sidebar" aria-label="Calculadoras"><a href="amostra.html">Tamanho amostral</a><a href="teste-t.html">Teste t</a><a href="qui-quadrado.html">Qui-quadrado</a><a class="active" href="correlacao.html">Correlação</a><a href="regressao-linear.html">Regressão linear</a><a href="anova.html">ANOVA</a><a href="cronbach.html">Alfa de Cronbach</a><a href="epidemiologia.html">Epidemiologia 2x2</a></nav>
+    <section class="content">
+      <section id="correlacao" class="tool" data-tool="correlation">
+        <div class="tool-heading"><div><h2>Pares de dados</h2><p>Informe pares x,y em linhas separadas para estimar a associação.</p></div></div>
+        <div class="grid two">
+          <label>Método<select id="cor-method"><option value="pearson">Pearson</option><option value="spearman">Spearman</option></select></label>
+          <label>Hipótese alternativa<select id="cor-tail"><option value="two">Bilateral</option><option value="greater">Correlação positiva</option><option value="less">Correlação negativa</option></select></label>
+        </div>
+        <label class="wide">Pares x,y<textarea id="cor-pairs" rows="6">12, 20
+14, 22
+16, 24
+18, 27
+20, 29
+22, 31</textarea></label>
+        <button class="primary" data-run="correlation">Calcular</button>
+        <div class="result" id="cor-result"></div>
+      </section>
+      <section class="explain" aria-labelledby="cor-explicacao">
+        <h2 id="cor-explicacao">Como este cálculo ajuda</h2>
+        <div class="explain-grid">
+          <div>
+            <h3>O que calcula</h3>
+            <p>Estima a intensidade e direção da associação entre duas variáveis numéricas ou ordenadas, usando Pearson ou Spearman.</p>
+          </div>
+          <div>
+            <h3>Contribuição acadêmica</h3>
+            <p>Ajuda a explorar relações entre medidas, formular hipóteses e relatar associações com coeficiente, intervalo de confiança e p-valor.</p>
+          </div>
+          <div>
+            <h3>Exemplo simples</h3>
+            <p>Um pesquisador avalia se horas de estudo estão associadas à nota final de uma turma.</p>
+          </div>
+        </div>
+      </section>
+      <section class="method-note" aria-labelledby="cor-metodo">
+        <h2 id="cor-metodo">Método, uso e referência</h2>
+        <dl>
+          <div><dt>Fórmula central</dt><dd><span class="formula">r = cov(x,y) / (sx · sy)</span>. Spearman aplica a mesma lógica aos postos dos dados.</dd></div>
+          <div><dt>Quando usar</dt><dd>Use Pearson para relação linear entre medidas numéricas e Spearman para associação monotônica, ordinal ou menos sensível a assimetria.</dd></div>
+          <div><dt>Referências</dt><dd>Pearson, 1895; Spearman, 1904; Fisher, 1921 para transformação z e intervalo de confiança.</dd></div>
+        </dl>
+      </section>
+    </section>
+  </main>
+  <footer class="footer"><p>Sem login e sem envio dos dados informados.</p></footer>
+  <script src="app.js"></script>
+</body>
+</html>

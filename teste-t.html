@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Teste t | Matemática para Pesquisadores</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header compact"><div><p class="eyebrow"><a href="index.html">Matemática para Pesquisadores</a></p><h1>Teste t</h1><p class="lede">Teste t de uma amostra, pareado ou independente com Welch, IC e tamanho de efeito.</p></div></header>
+  <main class="layout">
+    <nav class="sidebar" aria-label="Calculadoras"><a href="amostra.html">Tamanho amostral</a><a class="active" href="teste-t.html">Teste t</a><a href="qui-quadrado.html">Qui-quadrado</a><a href="correlacao.html">Correlação</a><a href="regressao-linear.html">Regressão linear</a><a href="anova.html">ANOVA</a><a href="cronbach.html">Alfa de Cronbach</a><a href="epidemiologia.html">Epidemiologia 2x2</a></nav>
+    <section class="content">
+      <section id="tteste" class="tool" data-tool="ttest">
+        <div class="tool-heading"><div><h2>Parâmetros do teste</h2><p>Escolha o desenho analítico e informe estatísticas resumidas dos grupos.</p></div></div>
+        <div class="grid two">
+          <label>Entrada de dados<select id="ttest-input-mode"><option value="summary">Estatísticas resumidas</option><option value="raw">Dados brutos</option></select></label>
+          <label>Tipo de teste<select id="ttest-type"><option value="one">Uma amostra</option><option value="paired">Pareado</option><option value="independent">Independente</option></select></label>
+          <label>Hipótese alternativa<select id="ttest-tail"><option value="two">Bilateral</option><option value="greater">Média/diferença maior</option><option value="less">Média/diferença menor</option></select></label>
+          <label class="ttest-field one">Média hipotética<input id="ttest-mu" type="number" step="0.0001" value="10"></label>
+        </div>
+        <div class="ttest-raw is-hidden">
+          <div class="grid two">
+            <label class="ttest-raw-field one paired independent">Dados grupo 1 / diferenças pareadas<textarea id="ttest-raw-1" rows="5">12, 14, 13, 16, 11, 15, 17, 14</textarea></label>
+            <label class="ttest-raw-field independent">Dados grupo 2<textarea id="ttest-raw-2" rows="5">9, 11, 10, 13, 8, 12, 14, 10</textarea></label>
+          </div>
+          <p class="hint">Use números separados por vírgula, espaço, ponto e vírgula ou quebra de linha. No teste pareado, informe as diferenças já calculadas.</p>
+        </div>
+        <div class="grid two ttest-summary">
+          <label class="ttest-field one paired">Média observada / média das diferenças<input id="ttest-mean1" type="number" step="0.0001" value="12.4"></label>
+          <label class="ttest-field one paired">Desvio-padrão / DP das diferenças<input id="ttest-sd1" type="number" min="0" step="0.0001" value="4.2"></label>
+          <label class="ttest-field one paired">n<input id="ttest-n1" type="number" min="2" step="1" value="32"></label>
+          <label class="ttest-field independent">Média grupo 1<input id="ttest-g1-mean" type="number" step="0.0001" value="12.4"></label>
+          <label class="ttest-field independent">DP grupo 1<input id="ttest-g1-sd" type="number" min="0" step="0.0001" value="4.2"></label>
+          <label class="ttest-field independent">n grupo 1<input id="ttest-g1-n" type="number" min="2" step="1" value="32"></label>
+          <label class="ttest-field independent">Média grupo 2<input id="ttest-g2-mean" type="number" step="0.0001" value="9.8"></label>
+          <label class="ttest-field independent">DP grupo 2<input id="ttest-g2-sd" type="number" min="0" step="0.0001" value="3.6"></label>
+          <label class="ttest-field independent">n grupo 2<input id="ttest-g2-n" type="number" min="2" step="1" value="30"></label>
+        </div>
+        <button class="primary" data-run="ttest">Calcular</button>
+        <div class="result" id="ttest-result"></div>
+      </section>
+      <section class="explain" aria-labelledby="tteste-explicacao">
+        <h2 id="tteste-explicacao">Como este cálculo ajuda</h2>
+        <div class="explain-grid">
+          <div>
+            <h3>O que calcula</h3>
+            <p>Compara uma média com um valor de referência, duas medidas pareadas ou duas médias independentes, estimando p-valor, intervalo de confiança e efeito.</p>
+          </div>
+          <div>
+            <h3>Contribuição acadêmica</h3>
+            <p>Ajuda a avaliar diferenças quantitativas entre condições, grupos ou momentos, com relato estatístico objetivo para artigo, TCC ou dissertação.</p>
+          </div>
+          <div>
+            <h3>Exemplo simples</h3>
+            <p>Um estudo compara a média de desempenho antes e depois de uma intervenção educacional para verificar se houve mudança relevante.</p>
+          </div>
+        </div>
+      </section>
+      <section class="method-note" aria-labelledby="tteste-metodo">
+        <h2 id="tteste-metodo">Método, uso e referência</h2>
+        <dl>
+          <div><dt>Fórmula central</dt><dd><span class="formula">t = diferença / erro-padrão</span>. Para grupos independentes, a calculadora usa Welch para graus de liberdade.</dd></div>
+          <div><dt>Quando usar</dt><dd>Use com variável quantitativa aproximadamente contínua. Com n pequeno, assimetria forte ou muitos outliers, considere uma alternativa não paramétrica ou análise robusta.</dd></div>
+          <div><dt>Referências</dt><dd>Student, 1908; Welch, 1947; Cohen, J. Statistical Power Analysis for the Behavioral Sciences.</dd></div>
+        </dl>
+      </section>
+    </section>
+  </main>
+  <footer class="footer"><p>Sem login e sem envio dos dados informados.</p></footer>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tamanho amostral | Matemática para Pesquisadores</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header compact">
+    <div>
+      <p class="eyebrow"><a href="index.html">Matemática para Pesquisadores</a></p>
+      <h1>Tamanho amostral</h1>
+      <p class="lede">Planejamento para médias, proporções e comparação entre dois grupos independentes.</p>
+    </div>
+  </header>
+  <main class="layout">
+    <nav class="sidebar" aria-label="Calculadoras">
+      <a class="active" href="amostra.html">Tamanho amostral</a>
+      <a href="teste-t.html">Teste t</a>
+      <a href="qui-quadrado.html">Qui-quadrado</a>
+      <a href="correlacao.html">Correlação</a>
+      <a href="regressao-linear.html">Regressão linear</a>
+      <a href="anova.html">ANOVA</a>
+      <a href="cronbach.html">Alfa de Cronbach</a>
+      <a href="epidemiologia.html">Epidemiologia 2x2</a>
+    </nav>
+    <section class="content">
+      <section id="amostra" class="tool" data-tool="sample">
+        <div class="tool-heading"><div><h2>Parâmetros do estudo</h2><p>Informe os parâmetros esperados. Os cálculos são executados localmente no navegador.</p></div></div>
+        <div class="grid two">
+          <label>Tipo de cálculo<select id="sample-type"><option value="mean">Estimativa de média</option><option value="proportion">Estimativa de proporção</option><option value="twoMeans">Diferença entre duas médias</option><option value="twoProportions">Diferença entre duas proporções</option></select></label>
+          <label>Nível de confiança (%)<input id="sample-confidence" type="number" min="80" max="99.9" step="0.1" value="95"></label>
+          <label class="sample-field mean twoMeans">Desvio-padrão esperado<input id="sample-sd" type="number" min="0" step="0.001" value="10"></label>
+          <label class="sample-field mean">Margem de erro<input id="sample-margin-mean" type="number" min="0" step="0.001" value="2"></label>
+          <label class="sample-field proportion twoProportions">Proporção esperada grupo/estudo (%)<input id="sample-p1" type="number" min="0.01" max="99.99" step="0.01" value="50"></label>
+          <label class="sample-field proportion">Margem de erro percentual<input id="sample-margin-prop" type="number" min="0.01" max="99.99" step="0.01" value="5"></label>
+          <label class="sample-field twoMeans">Diferença mínima relevante<input id="sample-delta-mean" type="number" min="0" step="0.001" value="5"></label>
+          <label class="sample-field twoMeans twoProportions">Poder estatístico (%)<input id="sample-power" type="number" min="50" max="99.9" step="0.1" value="80"></label>
+          <label class="sample-field twoProportions">Proporção esperada grupo 2 (%)<input id="sample-p2" type="number" min="0.01" max="99.99" step="0.01" value="35"></label>
+          <label>Acréscimo para perdas (%)<input id="sample-loss" type="number" min="0" max="90" step="0.1" value="10"></label>
+        </div>
+        <button class="primary" data-run="sample">Calcular</button>
+        <div class="result" id="sample-result"></div>
+      </section>
+      <section class="explain" aria-labelledby="amostra-explicacao">
+        <h2 id="amostra-explicacao">Como este cálculo ajuda</h2>
+        <div class="explain-grid">
+          <div>
+            <h3>O que calcula</h3>
+            <p>Estima o número mínimo de participantes ou observações necessário para atingir confiança, margem de erro ou poder estatístico definidos.</p>
+          </div>
+          <div>
+            <h3>Contribuição acadêmica</h3>
+            <p>Ajuda a justificar o planejamento metodológico, reduzir estudos subdimensionados e explicitar critérios antes da coleta de dados.</p>
+          </div>
+          <div>
+            <h3>Exemplo simples</h3>
+            <p>Uma pesquisadora quer estimar a média de ansiedade em estudantes e usa o cálculo para definir quantos questionários precisa aplicar.</p>
+          </div>
+        </div>
+      </section>
+      <section class="method-note" aria-labelledby="amostra-metodo">
+        <h2 id="amostra-metodo">Método, uso e referência</h2>
+        <dl>
+          <div><dt>Fórmula central</dt><dd><span class="formula">n = (z · σ / E)²</span> para médias; <span class="formula">n = z² · p(1-p) / E²</span> para proporções.</dd></div>
+          <div><dt>Quando usar</dt><dd>Use no planejamento do estudo, antes da coleta, quando há uma estimativa razoável de desvio-padrão, proporção esperada ou diferença mínima relevante.</dd></div>
+          <div><dt>Referências</dt><dd>Cochran, W. G. Sampling Techniques; Chow, Shao & Wang. Sample Size Calculations in Clinical Research.</dd></div>
+        </dl>
+      </section>
+    </section>
+  </main>
+  <footer class="footer"><p>Sem login e sem envio dos dados informados.</p></footer>
+  <script src="app.js"></script>
+</body>
+</html>

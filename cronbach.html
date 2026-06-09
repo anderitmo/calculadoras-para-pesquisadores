@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alfa de Cronbach | Matemática para Pesquisadores</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header compact"><div><p class="eyebrow"><a href="index.html">Matemática para Pesquisadores</a></p><h1>Alfa de Cronbach</h1><p class="lede">Avalie a consistência interna de itens de uma escala ou questionário, com diagnóstico item-total e alfa se item removido.</p></div></header>
+  <main class="layout">
+    <nav class="sidebar" aria-label="Calculadoras"><a href="amostra.html">Tamanho amostral</a><a href="teste-t.html">Teste t</a><a href="qui-quadrado.html">Qui-quadrado</a><a href="correlacao.html">Correlação</a><a href="regressao-linear.html">Regressão linear</a><a href="anova.html">ANOVA</a><a class="active" href="cronbach.html">Alfa de Cronbach</a><a href="epidemiologia.html">Epidemiologia 2x2</a></nav>
+    <section class="content">
+      <section id="cronbach" class="tool" data-tool="cronbach">
+        <div class="tool-heading"><div><h2>Respostas por participante</h2><p>Informe uma linha por respondente e uma coluna por item. Use valores numéricos já recodificados na mesma direção.</p></div></div>
+        <label class="wide">Matriz de respostas<textarea id="cronbach-data" rows="9">4, 5, 4, 5, 4
+3, 4, 4, 4, 3
+5, 5, 5, 4, 5
+2, 3, 2, 3, 2
+4, 4, 5, 4, 4
+3, 3, 4, 3, 3
+5, 4, 5, 5, 5
+2, 2, 3, 2, 2</textarea></label>
+        <p class="hint">Cada linha é um participante. Cada coluna é um item. Para itens invertidos, recodifique antes de calcular.</p>
+        <button class="primary" data-run="cronbach">Calcular</button>
+        <div class="result" id="cronbach-result"></div>
+      </section>
+      <section class="explain" aria-labelledby="cronbach-explicacao">
+        <h2 id="cronbach-explicacao">Como este cálculo ajuda</h2>
+        <div class="explain-grid">
+          <div>
+            <h3>O que calcula</h3>
+            <p>Estima a consistência interna de um conjunto de itens que deveriam medir um mesmo construto.</p>
+          </div>
+          <div>
+            <h3>Contribuição acadêmica</h3>
+            <p>Ajuda a relatar confiabilidade de escalas, questionários e instrumentos de coleta em estudos quantitativos.</p>
+          </div>
+          <div>
+            <h3>Exemplo simples</h3>
+            <p>Uma escala de satisfação com cinco itens deve apresentar respostas coerentes entre si.</p>
+          </div>
+        </div>
+      </section>
+      <section class="method-note" aria-labelledby="cronbach-metodo">
+        <h2 id="cronbach-metodo">Método, uso e referência</h2>
+        <dl>
+          <div><dt>Fórmula central</dt><dd><span class="formula">α = k/(k-1) · (1 - Σσ² item / σ² total)</span>, em que k é o número de itens.</dd></div>
+          <div><dt>Quando usar</dt><dd>Use quando os itens compõem uma escala aproximadamente unidimensional. Alfa alto não prova validade nem substitui análise fatorial.</dd></div>
+          <div><dt>Referências</dt><dd>Cronbach, L. J. Coefficient alpha and the internal structure of tests; Tavakol & Dennick, 2011.</dd></div>
+        </dl>
+      </section>
+    </section>
+  </main>
+  <footer class="footer"><p>Sem login e sem envio dos dados informados.</p></footer>
+  <script src="app.js"></script>
+</body>
+</html>

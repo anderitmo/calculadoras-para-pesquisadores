@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Matemática para Pesquisadores</title>
+  <meta name="description" content="Calculadoras estatísticas gratuitas, anônimas e executadas no navegador para pesquisadores brasileiros.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div>
+      <p class="eyebrow">100% gratuito · anônimo · processamento local</p>
+      <h1>Matemática para Pesquisadores</h1>
+      <p class="lede">Calculadoras quantitativas com saídas em Markdown, pressupostos explícitos, exemplos curtos e resultados prontos para relatório acadêmico.</p>
+    </div>
+  </header>
+
+  <main class="layout">
+    <nav class="sidebar" aria-label="Calculadoras">
+      <a href="#calculadoras">Calculadoras</a>
+      <a href="#guia">Qual método usar</a>
+      <a href="#conceitos">Conceitos essenciais</a>
+      <a href="#exemplos">Exemplos rápidos</a>
+      <a href="#boas-praticas">Boas práticas</a>
+    </nav>
+
+    <section class="content">
+      <section id="calculadoras" class="tool">
+        <div class="tool-heading">
+          <div>
+            <h2>Calculadoras disponíveis</h2>
+            <p>Escolha a ferramenta conforme a pergunta de pesquisa, o tipo de variável e o desenho do estudo.</p>
+          </div>
+        </div>
+
+        <div class="tool-list calculator-list">
+          <a href="amostra.html">
+            <strong>Tamanho amostral</strong>
+            <span>Planejamento para médias, proporções, dois grupos, poder estatístico e perdas.</span>
+            <em>Exemplo: quantos participantes são necessários para estimar a média de ansiedade de estudantes?</em>
+          </a>
+          <a href="teste-t.html">
+            <strong>Teste t</strong>
+            <span>Compara uma média, duas medidas pareadas ou duas médias independentes com Welch.</span>
+            <em>Exemplo: a nota média mudou depois de uma intervenção?</em>
+          </a>
+          <a href="qui-quadrado.html">
+            <strong>Qui-quadrado</strong>
+            <span>Testa aderência ou associação entre variáveis categóricas em tabelas RxC.</span>
+            <em>Exemplo: preferência por aula presencial/remota varia entre cursos?</em>
+          </a>
+          <a href="correlacao.html">
+            <strong>Correlação</strong>
+            <span>Estima associação entre duas variáveis por Pearson ou Spearman, com gráfico.</span>
+            <em>Exemplo: horas de estudo se associam à nota final?</em>
+          </a>
+          <a href="regressao-linear.html">
+            <strong>Regressão linear simples</strong>
+            <span>Modela uma variável resposta a partir de uma variável explicativa.</span>
+            <em>Exemplo: quanto a nota aumenta a cada hora adicional de estudo?</em>
+          </a>
+          <a href="anova.html">
+            <strong>ANOVA de um fator</strong>
+            <span>Compara três ou mais médias, com efeito, gráfico e pós-comparações.</span>
+            <em>Exemplo: três métodos de ensino produzem médias de desempenho diferentes?</em>
+          </a>
+          <a href="cronbach.html">
+            <strong>Alfa de Cronbach</strong>
+            <span>Avalia consistência interna de itens em escalas e questionários.</span>
+            <em>Exemplo: os itens de uma escala de satisfação parecem medir o mesmo construto?</em>
+          </a>
+          <a href="epidemiologia.html">
+            <strong>Epidemiologia 2x2</strong>
+            <span>Calcula RR, OR, diferença de riscos, NNT/NNH e qui-quadrado.</span>
+            <em>Exemplo: exposição a um fator aumenta a ocorrência de um desfecho?</em>
+          </a>
+        </div>
+      </section>
+
+      <section id="guia" class="method-note">
+        <h2>Qual método usar?</h2>
+        <dl>
+          <div>
+            <dt>Quero planejar a coleta de dados.</dt>
+            <dd>Use <a href="amostra.html">tamanho amostral</a>. Exemplo: definir o n antes de aplicar questionários.</dd>
+          </div>
+          <div>
+            <dt>Quero comparar duas médias.</dt>
+            <dd>Use <a href="teste-t.html">teste t</a>. Exemplo: comparar grupo controle e intervenção em uma escala contínua.</dd>
+          </div>
+          <div>
+            <dt>Quero comparar três ou mais médias.</dt>
+            <dd>Use <a href="anova.html">ANOVA</a>. Exemplo: comparar desempenho médio entre três métodos de ensino.</dd>
+          </div>
+          <div>
+            <dt>Quero avaliar associação entre categorias.</dt>
+            <dd>Use <a href="qui-quadrado.html">qui-quadrado</a>. Exemplo: curso frequentado e preferência por modalidade de aula.</dd>
+          </div>
+          <div>
+            <dt>Quero medir relação entre duas variáveis numéricas.</dt>
+            <dd>Use <a href="correlacao.html">correlação</a> para associação e <a href="regressao-linear.html">regressão linear</a> para estimar uma equação preditiva simples.</dd>
+          </div>
+          <div>
+            <dt>Quero analisar uma tabela exposto/desfecho.</dt>
+            <dd>Use <a href="epidemiologia.html">epidemiologia 2x2</a>. Exemplo: risco de evento em expostos e não expostos.</dd>
+          </div>
+          <div>
+            <dt>Quero avaliar uma escala ou questionário.</dt>
+            <dd>Use <a href="cronbach.html">Alfa de Cronbach</a>. Exemplo: verificar consistência interna de itens Likert.</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section id="conceitos" class="explain">
+        <h2>Conceitos essenciais</h2>
+        <div class="explain-grid">
+          <div>
+            <h3>p-valor</h3>
+            <p>Indica quão incompatível o resultado observado é com a hipótese nula. Exemplo: p baixo sugere diferença, mas não mede importância prática.</p>
+          </div>
+          <div>
+            <h3>Intervalo de confiança</h3>
+            <p>Mostra uma faixa plausível para o parâmetro. Exemplo: uma diferença média de 4 pontos com IC95% [1, 7] sugere efeito positivo.</p>
+          </div>
+          <div>
+            <h3>Tamanho de efeito</h3>
+            <p>Ajuda a avaliar magnitude. Exemplo: η² alto na ANOVA indica que boa parte da variação está associada aos grupos.</p>
+          </div>
+          <div>
+            <h3>Variável quantitativa</h3>
+            <p>É medida em número com sentido de quantidade. Exemplo: idade, nota, tempo de resposta, escore de uma escala.</p>
+          </div>
+          <div>
+            <h3>Variável categórica</h3>
+            <p>Representa grupos ou classes. Exemplo: sexo, curso, tratamento, presença ou ausência de evento.</p>
+          </div>
+          <div>
+            <h3>Pressupostos</h3>
+            <p>São condições que tornam a análise mais confiável. Exemplo: independência dos dados e ausência de outliers extremos.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="exemplos" class="method-note">
+        <h2>Exemplos rápidos de perguntas quantitativas</h2>
+        <dl>
+          <div>
+            <dt>Educação</dt>
+            <dd>“A média de desempenho difere entre três métodos de ensino?” Use ANOVA e relate F, p, η² e comparações pareadas.</dd>
+          </div>
+          <div>
+            <dt>Saúde</dt>
+            <dd>“A exposição a um fator está associada a maior risco de evento?” Use tabela 2x2, RR/OR e IC95%.</dd>
+          </div>
+          <div>
+            <dt>Psicologia</dt>
+            <dd>“Quanto maior o estresse, menor a qualidade do sono?” Use correlação ou regressão linear, conforme a pergunta.</dd>
+          </div>
+          <div>
+            <dt>Ciências sociais</dt>
+            <dd>“A opinião sobre uma política pública varia conforme escolaridade?” Use qui-quadrado em tabela de contingência.</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section id="boas-praticas" class="explain">
+        <h2>Boas práticas para relatar resultados</h2>
+        <div class="explain-grid">
+          <div>
+            <h3>Relate o método</h3>
+            <p>Informe qual teste foi usado e por quê. Exemplo: “Foi aplicada ANOVA de um fator para comparar três grupos independentes”.</p>
+          </div>
+          <div>
+            <h3>Mostre magnitude</h3>
+            <p>Não fique apenas no p-valor. Inclua efeito, IC95% e interpretação prática quando possível.</p>
+          </div>
+          <div>
+            <h3>Descreva limites</h3>
+            <p>Comente amostra pequena, dados ausentes, outliers, desenho observacional ou pressupostos frágeis.</p>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Sem login, sem cookies de rastreamento e sem envio dos dados informados. As calculadoras são apoio metodológico, não substituem revisão estatística especializada.</p>
+  </footer>
+</body>
+</html>

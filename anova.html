@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ANOVA de um fator | Matemática para Pesquisadores</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header compact"><div><p class="eyebrow"><a href="index.html">Matemática para Pesquisadores</a></p><h1>ANOVA de um fator</h1><p class="lede">Compare três ou mais médias independentes, com tabela ANOVA, tamanho de efeito, gráfico e pós-comparações ajustadas.</p></div></header>
+  <main class="layout">
+    <nav class="sidebar" aria-label="Calculadoras"><a href="amostra.html">Tamanho amostral</a><a href="teste-t.html">Teste t</a><a href="qui-quadrado.html">Qui-quadrado</a><a href="correlacao.html">Correlação</a><a href="regressao-linear.html">Regressão linear</a><a class="active" href="anova.html">ANOVA</a><a href="cronbach.html">Alfa de Cronbach</a><a href="epidemiologia.html">Epidemiologia 2x2</a></nav>
+    <section class="content">
+      <section id="anova" class="tool" data-tool="anova">
+        <div class="tool-heading"><div><h2>Grupos independentes</h2><p>Informe um grupo por linha, com nome opcional antes de dois-pontos.</p></div></div>
+        <label class="wide">Dados dos grupos<textarea id="anova-groups" rows="8">Controle: 72, 75, 70, 78, 74, 73
+Tratamento A: 80, 82, 79, 85, 83, 81
+Tratamento B: 76, 78, 77, 80, 79, 75</textarea></label>
+        <p class="hint">Formato: Nome do grupo: valores. Use vírgula, espaço ou ponto e vírgula para separar números.</p>
+        <button class="primary" data-run="anova">Calcular</button>
+        <div class="result" id="anova-result"></div>
+      </section>
+      <section class="explain" aria-labelledby="anova-explicacao">
+        <h2 id="anova-explicacao">Como este cálculo ajuda</h2>
+        <div class="explain-grid">
+          <div>
+            <h3>O que calcula</h3>
+            <p>Testa se três ou mais grupos independentes apresentam médias compatíveis ou se ao menos uma média difere das demais.</p>
+          </div>
+          <div>
+            <h3>Contribuição acadêmica</h3>
+            <p>Ajuda a comparar tratamentos, turmas, condições experimentais ou categorias de exposição em uma variável quantitativa.</p>
+          </div>
+          <div>
+            <h3>Exemplo simples</h3>
+            <p>Um estudo compara a média de desempenho entre grupo controle, tratamento A e tratamento B.</p>
+          </div>
+        </div>
+      </section>
+      <section class="method-note" aria-labelledby="anova-metodo">
+        <h2 id="anova-metodo">Método, uso e referência</h2>
+        <dl>
+          <div><dt>Fórmula central</dt><dd><span class="formula">F = MS entre grupos / MS dentro dos grupos</span>, com decomposição da variabilidade total.</dd></div>
+          <div><dt>Quando usar</dt><dd>Use com grupos independentes e variável resposta quantitativa. Verifique outliers, variâncias muito diferentes e adequação do desenho.</dd></div>
+          <div><dt>Referências</dt><dd>Fisher, R. A. Statistical Methods for Research Workers; Maxwell, Delaney & Kelley. Designing Experiments and Analyzing Data.</dd></div>
+        </dl>
+      </section>
+    </section>
+  </main>
+  <footer class="footer"><p>Sem login e sem envio dos dados informados.</p></footer>
+  <script src="app.js"></script>
+</body>
+</html>

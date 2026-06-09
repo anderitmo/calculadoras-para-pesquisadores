@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Qui-quadrado | Matemática para Pesquisadores</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header compact"><div><p class="eyebrow"><a href="index.html">Matemática para Pesquisadores</a></p><h1>Qui-quadrado</h1><p class="lede">Aderência ou independência com V de Cramér e correção de Yates para 2x2.</p></div></header>
+  <main class="layout">
+    <nav class="sidebar" aria-label="Calculadoras"><a href="amostra.html">Tamanho amostral</a><a href="teste-t.html">Teste t</a><a class="active" href="qui-quadrado.html">Qui-quadrado</a><a href="correlacao.html">Correlação</a><a href="regressao-linear.html">Regressão linear</a><a href="anova.html">ANOVA</a><a href="cronbach.html">Alfa de Cronbach</a><a href="epidemiologia.html">Epidemiologia 2x2</a></nav>
+    <section class="content">
+      <section id="qui" class="tool" data-tool="chi">
+        <div class="tool-heading"><div><h2>Dados do teste</h2><p>Use frequências absolutas. Cada linha da tabela de independência representa uma categoria.</p></div></div>
+        <div class="grid two">
+          <label>Tipo de teste<select id="chi-type"><option value="independence">Independência em tabela de contingência</option><option value="goodness">Aderência a frequências esperadas</option></select></label>
+          <label>Correção de Yates para 2x2<select id="chi-yates"><option value="no">Não</option><option value="yes">Sim</option></select></label>
+        </div>
+        <div class="preset-row" aria-label="Dimensões populares">
+          <button type="button" data-chi-preset="2x2">2x2</button>
+          <button type="button" data-chi-preset="2x3">2x3</button>
+          <button type="button" data-chi-preset="3x2">3x2</button>
+          <button type="button" data-chi-preset="3x3">3x3</button>
+          <button type="button" data-chi-preset="4x2">4x2</button>
+        </div>
+        <label class="wide">Dados observados<textarea id="chi-observed" rows="5">18, 12
+7, 23</textarea></label>
+        <label class="wide chi-expected">Esperados para aderência<textarea id="chi-expected" rows="3">12.5, 12.5, 12.5, 12.5</textarea></label>
+        <p class="hint">Use vírgula, ponto e vírgula, tabulação ou espaço.</p>
+        <button class="primary" data-run="chi">Calcular</button>
+        <div class="result" id="chi-result"></div>
+      </section>
+      <section class="explain" aria-labelledby="qui-explicacao">
+        <h2 id="qui-explicacao">Como este cálculo ajuda</h2>
+        <div class="explain-grid">
+          <div>
+            <h3>O que calcula</h3>
+            <p>Compara frequências observadas com frequências esperadas ou testa associação entre categorias em tabelas 2x2, 2x3, 3x3 e outras dimensões.</p>
+          </div>
+          <div>
+            <h3>Contribuição acadêmica</h3>
+            <p>Ajuda a investigar relações entre variáveis categóricas e identificar quais células mais contribuem para a diferença observada.</p>
+          </div>
+          <div>
+            <h3>Exemplo simples</h3>
+            <p>Uma pesquisa verifica se a preferência por modalidade de aula varia entre estudantes de diferentes cursos.</p>
+          </div>
+        </div>
+      </section>
+      <section class="method-note" aria-labelledby="qui-metodo">
+        <h2 id="qui-metodo">Método, uso e referência</h2>
+        <dl>
+          <div><dt>Fórmula central</dt><dd><span class="formula">χ² = Σ((O - E)² / E)</span>, com graus de liberdade definidos pelo tipo de tabela.</dd></div>
+          <div><dt>Quando usar</dt><dd>Use com frequências absolutas em variáveis categóricas. Evite interpretar sem cautela quando muitas frequências esperadas forem pequenas.</dd></div>
+          <div><dt>Referências</dt><dd>Pearson, 1900; Agresti, A. Categorical Data Analysis.</dd></div>
+        </dl>
+      </section>
+    </section>
+  </main>
+  <footer class="footer"><p>Sem login e sem envio dos dados informados.</p></footer>
+  <script src="app.js"></script>
+</body>
+</html>
