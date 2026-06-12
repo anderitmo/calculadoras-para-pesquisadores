@@ -17,17 +17,17 @@
           <label>Nome de X<input id="log-x-name" type="text" value="Exposição"></label>
           <label>Nome de Y<input id="log-y-name" type="text" value="Desfecho"></label>
         </div>
-        <label class="wide">Pares x,y<textarea id="log-pairs" rows="8">1, 0
-2, 0
-3, 1
-4, 0
-5, 1
-6, 1
-7, 1
-8, 1
-9, 1
-10, 1</textarea></label>
-        <p class="hint">Use vírgula ou espaço como separador. A variável Y deve conter apenas 0 ou 1.</p>
+        <label class="wide">Pares x,y<textarea id="log-pairs" rows="8">1; 0
+2; 0
+3; 1
+4; 0
+5; 1
+6; 1
+7; 1
+8; 1
+9; 1
+10; 1</textarea></label>
+        <p class="hint" data-hint-key="pairs" data-hint-extra="A variável Y deve conter apenas 0 ou 1.">Use espaço ou ponto e vírgula como separador (ex: 2; 5,8). A variável Y deve conter apenas 0 ou 1.</p>
         <button class="primary" data-run="logistic">Calcular</button>
         <div class="result" id="logistic-result"></div>
       </section>

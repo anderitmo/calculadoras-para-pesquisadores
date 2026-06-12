@@ -18,10 +18,10 @@
           <label>Hipótese alternativa<select id="np-tail"><option value="two">Bilateral</option><option value="greater">Grupo 1 / diferenças maiores</option><option value="less">Grupo 1 / diferenças menores</option></select></label>
         </div>
         <div class="grid two">
-          <label>Grupo 1 / diferenças pareadas<textarea id="np-values-1" rows="6">12, 14, 13, 16, 11, 15, 17, 14</textarea></label>
-          <label class="np-second">Grupo 2<textarea id="np-values-2" rows="6">9, 11, 10, 13, 8, 12, 14, 10</textarea></label>
+          <label>Grupo 1 / diferenças pareadas<textarea id="np-values-1" rows="6">12; 14; 13; 16; 11; 15; 17; 14</textarea></label>
+          <label class="np-second">Grupo 2<textarea id="np-values-2" rows="6">9; 11; 10; 13; 8; 12; 14; 10</textarea></label>
         </div>
-        <p class="hint">Para Wilcoxon pareado, informe as diferenças pareadas no primeiro campo. Diferenças iguais a zero são removidas.</p>
+        <p class="hint" data-hint-key="np">Use números separados por espaço, ponto e vírgula ou quebra de linha (ex: 12,5; 14; 13). Para Wilcoxon pareado, informe as diferenças pareadas no primeiro campo.</p>
         <button class="primary" data-run="nonparametric">Calcular</button>
         <div class="result" id="nonparametric-result"></div>
       </section>

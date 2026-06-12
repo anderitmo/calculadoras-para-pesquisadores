@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
@@ -32,15 +32,15 @@
         <div class="tool-heading"><div><h2>Parâmetros do estudo</h2><p>Informe os parâmetros esperados. Os cálculos são executados localmente no navegador.</p></div></div>
         <div class="grid two">
           <label>Tipo de cálculo<select id="sample-type"><option value="mean">Estimativa de média</option><option value="proportion">Estimativa de proporção</option><option value="twoMeans">Diferença entre duas médias</option><option value="twoProportions">Diferença entre duas proporções</option></select></label>
-          <label>Nível de confiança (%)<input id="sample-confidence" type="number" min="80" max="99.9" step="0.1" value="95"></label>
-          <label class="sample-field mean twoMeans">Desvio-padrão esperado<input id="sample-sd" type="number" min="0" step="0.001" value="10"></label>
-          <label class="sample-field mean">Margem de erro<input id="sample-margin-mean" type="number" min="0" step="0.001" value="2"></label>
-          <label class="sample-field proportion twoProportions">Proporção esperada grupo/estudo (%)<input id="sample-p1" type="number" min="0.01" max="99.99" step="0.01" value="50"></label>
-          <label class="sample-field proportion">Margem de erro percentual<input id="sample-margin-prop" type="number" min="0.01" max="99.99" step="0.01" value="5"></label>
-          <label class="sample-field twoMeans">Diferença mínima relevante<input id="sample-delta-mean" type="number" min="0" step="0.001" value="5"></label>
-          <label class="sample-field twoMeans twoProportions">Poder estatístico (%)<input id="sample-power" type="number" min="50" max="99.9" step="0.1" value="80"></label>
-          <label class="sample-field twoProportions">Proporção esperada grupo 2 (%)<input id="sample-p2" type="number" min="0.01" max="99.99" step="0.01" value="35"></label>
-          <label>Acréscimo para perdas (%)<input id="sample-loss" type="number" min="0" max="90" step="0.1" value="10"></label>
+          <label>Nível de confiança (%)<input id="sample-confidence" type="text" inputmode="decimal" value="95"></label>
+          <label class="sample-field mean twoMeans">Desvio-padrão esperado<input id="sample-sd" type="text" inputmode="decimal" value="10"></label>
+          <label class="sample-field mean">Margem de erro<input id="sample-margin-mean" type="text" inputmode="decimal" value="2"></label>
+          <label class="sample-field proportion twoProportions">Proporção esperada grupo/estudo (%)<input id="sample-p1" type="text" inputmode="decimal" value="50"></label>
+          <label class="sample-field proportion">Margem de erro percentual<input id="sample-margin-prop" type="text" inputmode="decimal" value="5"></label>
+          <label class="sample-field twoMeans">Diferença mínima relevante<input id="sample-delta-mean" type="text" inputmode="decimal" value="5"></label>
+          <label class="sample-field twoMeans twoProportions">Poder estatístico (%)<input id="sample-power" type="text" inputmode="decimal" value="80"></label>
+          <label class="sample-field twoProportions">Proporção esperada grupo 2 (%)<input id="sample-p2" type="text" inputmode="decimal" value="35"></label>
+          <label>Acréscimo para perdas (%)<input id="sample-loss" type="text" inputmode="decimal" value="10"></label>
         </div>
         <button class="primary" data-run="sample">Calcular</button>
         <div class="result" id="sample-result"></div>

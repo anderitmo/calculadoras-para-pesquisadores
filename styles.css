@@ -632,3 +632,87 @@ textarea:focus {
     grid-template-columns: 1fr;
   }
 }
+
+/* Sidebar Settings Styling */
+.sidebar-settings {
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  display: grid;
+  gap: 8px;
+}
+
+.settings-divider {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 10px 0 4px 0;
+  width: 100%;
+}
+
+.settings-title {
+  font-size: 0.78rem;
+  font-weight: 750;
+  text-transform: uppercase;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+.settings-label {
+  display: grid;
+  gap: 4px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.settings-label select {
+  min-height: 34px;
+  height: 34px;
+  padding: 4px 8px;
+  font-size: 0.84rem;
+}
+
+.sidebar-group-title {
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  margin-top: 12px;
+  padding: 6px 12px 2px;
+}
+
+.sidebar-group-title:first-of-type {
+  margin-top: 4px;
+}
+
+@media (max-width: 860px) {
+  .sidebar-settings,
+  .sidebar-group-title {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Decimal separator info badge */
+.decimal-info-badge {
+  background: #e8f5f1;
+  border: 1px solid #b2dfdb;
+  border-left: 4px solid var(--accent);
+  border-radius: 6px;
+  padding: 8px 14px;
+  margin-bottom: 16px;
+  font-size: 0.82rem;
+  color: #1a4a42;
+  line-height: 1.5;
+}
+
+.decimal-info-badge strong {
+  color: var(--accent-dark);
+}
+
+.decimal-info-badge code {
+  background: rgba(23, 107, 92, 0.1);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 0.88em;
+}
+

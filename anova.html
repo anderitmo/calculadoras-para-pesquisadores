@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
@@ -13,10 +13,10 @@
     <section class="content">
       <section id="anova" class="tool" data-tool="anova">
         <div class="tool-heading"><div><h2>Grupos independentes</h2><p>Informe um grupo por linha, com nome opcional antes de dois-pontos.</p></div></div>
-        <label class="wide">Dados dos grupos<textarea id="anova-groups" rows="8">Controle: 72, 75, 70, 78, 74, 73
-Tratamento A: 80, 82, 79, 85, 83, 81
-Tratamento B: 76, 78, 77, 80, 79, 75</textarea></label>
-        <p class="hint">Formato: Nome do grupo: valores. Use vírgula, espaço ou ponto e vírgula para separar números.</p>
+        <label class="wide">Dados dos grupos<textarea id="anova-groups" rows="8">Controle: 72; 75; 70; 78; 74; 73
+Tratamento A: 80; 82; 79; 85; 83; 81
+Tratamento B: 76; 78; 77; 80; 79; 75</textarea></label>
+        <p class="hint" data-hint-key="anova">Formato: Nome do grupo: valores. Use espaço ou ponto e vírgula para separar números (ex: Controle: 72,5; 75; 70).</p>
         <button class="primary" data-run="anova">Calcular</button>
         <div class="result" id="anova-result"></div>
       </section>
