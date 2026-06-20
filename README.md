@@ -1,4 +1,4 @@
-# Estatíatica Para Pesquisadores
+# Estatística Para Pesquisadores
 
 
 > **Calculadoras para auxiliar a validação e verificação de pesquisas com dados quantitativos**
