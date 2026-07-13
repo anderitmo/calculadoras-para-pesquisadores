@@ -244,15 +244,78 @@
   }
 
   /* ----- Home ----- */
+  var GROUP_DESCRIPTIONS = {
+    "Estatística Descritiva": {
+      definition: "É a etapa inicial da análise de dados que visa descrever, organizar e resumir um conjunto de observações de forma simples e compreensível, sem realizar generalizações para uma população.",
+      purpose: "Serve para identificar padrões, tendências centrais (como média e mediana), dispersão (como desvio padrão e variância) e a forma da distribuição dos dados.",
+      when: "Sempre que você coletar novos dados e precisar de uma visão geral sobre eles antes de aplicar testes de hipóteses avançados, ou quando o objetivo do estudo for puramente de caráter exploratório ou descritivo.",
+      where: "Em relatórios de pesquisa científica, censos demográficos, resumos de desempenho de vendas, análise de notas escolares ou qualquer contexto que demande sumarização de dados brutos.",
+      example: "Descrever a média de idade, a distribuição por gênero e a variação de renda de um grupo de participantes de uma pesquisa clínica."
+    },
+    "Probabilidade": {
+      definition: "É o ramo da matemática que estuda a chance de ocorrência de eventos aleatórios e modela a incerteza por meio de distribuições teóricas.",
+      purpose: "Serve para calcular a probabilidade de determinados resultados ocorrerem sob certas condições e fornecer a base estatística necessária para testes de hipóteses e estimação.",
+      when: "Quando for necessário estimar a probabilidade de eventos futuros, avaliar riscos, modelar fenômenos de contagem/tempo de espera ou compreender o comportamento de variáveis aleatórias.",
+      where: "No setor de seguros (cálculo de risco de sinistros), controle de qualidade industrial (peças defeituosas), modelação de filas de atendimento, genética de populações e finanças.",
+      example: "Calcular a chance de exatamente 5 em 10 pacientes responderem a um tratamento específico usando a distribuição binomial, ou gerar números aleatórios para simulações de Monte Carlo."
+    },
+    "Inferência": {
+      definition: "É o conjunto de técnicas estatísticas que permite generalizar e tirar conclusões para uma população inteira com base na análise de uma amostra representativa.",
+      purpose: "Serve para testar hipóteses científicas (verificando se diferenças ou relações são estatisticamente significativas) e construir intervalos de confiança para parâmetros desconhecidos.",
+      when: "Quando você tiver dados amostrais e quiser estender as conclusões para uma população maior, testar se dois ou mais grupos diferem entre si, ou avaliar o impacto de intervenções.",
+      where: "Ensaios clínicos e testes de novos medicamentos, pesquisas de opinião pública, testes de mercado (A/B) e experimentos agrícolas.",
+      example: "Realizar um teste t de Student para verificar se o novo método de ensino gerou notas significativamente maiores do que o método tradicional em uma escola."
+    },
+    "Não Paramétricos": {
+      definition: "É uma classe de testes estatísticos que não exige pressupostos rígidos sobre a distribuição dos dados (como a suposição de normalidade) e baseia-se em postos ou ordenamentos (ranks).",
+      purpose: "Serve para testar hipóteses de forma estatisticamente robusta quando os dados são ordinais, apresentam forte assimetria ou quando o tamanho amostral é muito pequeno para garantir normalidade.",
+      when: "Quando os dados falharem nos testes de normalidade (como Kolmogorov-Smirnov), em dados qualitativos ordinais (escalas Likert) ou na presença de valores discrepantes (outliers) severos.",
+      where: "Pesquisas comportamentais com escalas subjetivas, psicologia, ciências sociais e estudos biológicos com amostras reduzidas.",
+      example: "Aplicar o Teste de Mann-Whitney para comparar a percepção de dor (escala de 1 a 10) entre dois grupos de pacientes sob tratamentos distintos."
+    },
+    "Multivariada": {
+      definition: "É o conjunto de métodos estatísticos avançados destinados à análise simultânea de múltiplas variáveis medidas em cada unidade amostral.",
+      purpose: "Serve para compreender e modelar a estrutura de dependências mútuas, simplificar a dimensionalidade de grandes conjuntos de dados e prever desfechos complexos com base em múltiplos fatores preditores.",
+      when: "Quando as variáveis de interesse forem correlacionadas de forma complexa e isolar as análises individualmente puder ocultar efeitos combinados ou gerar interpretações errôneas.",
+      where: "Genômica (expressão de múltiplos genes), segmentação de mercado (clusterização de clientes), previsão macroeconômica e modelos de satisfação do cliente.",
+      example: "Executar uma análise de componentes principais (PCA) para simplificar 30 variáveis de comportamento do consumidor em apenas 3 dimensões fundamentais."
+    },
+    "Outras Ferramentas": {
+      definition: "É um conjunto de utilitários auxiliares, conversores de dados e tabelas estatísticas de referência que complementam as análises e dão suporte operacional aos pesquisadores.",
+      purpose: "Serve para facilitar a preparação e formatação de dados, a consulta a valores críticos teóricos de referência e a computação ágil de taxas de prevalência/risco em epidemiologia.",
+      when: "No início do tratamento dos dados, na validação manual de testes ou quando for necessário realizar a limpeza e conversão de formatação decimal de dados copiados de planilhas eletrônicas.",
+      where: "No suporte operacional do dia a dia de laboratórios de pesquisa, formatação de planilhas para exportação e conferência ágil de artigos científicos.",
+      example: "Usar o Conversor de Dados para alterar o separador de dados copiados do Excel antes de alimentá-los em outras calculadoras de hipóteses."
+    }
+  };
+
   function renderHome() {
     renderSidebar("home");
     var box = document.getElementById("grupos");
     if (!box) return;
     var h = "";
     GROUPS.forEach(function (g) {
-      h += '<div class="card group-card"><h3>' + g[0] + "</h3><ul class=\"calc-list\">";
-      g[1].forEach(function (it) { h += '<li><a href="' + it[0] + '.html">' + it[1] + "</a></li>"; });
-      h += "</ul></div>";
+      var name = g[0];
+      var desc = GROUP_DESCRIPTIONS[name];
+      h += '<div class="card group-card" style="margin-bottom:2rem; padding:2rem;">' +
+           '<h3 style="font-size:1.6rem; color:#1e3d32; border-bottom:2px solid #e1e9e5; padding-bottom:.5rem; margin-top:0; margin-bottom:1.25rem;">' + name + '</h3>';
+
+      if (desc) {
+        h += '<div class="group-info" style="font-size:.9rem; line-height:1.5; color:#555; margin-bottom:1.5rem; display:grid; gap:.8rem;">' +
+             '<div><strong>O que é?</strong> ' + desc.definition + '</div>' +
+             '<div><strong>Para que serve?</strong> ' + desc.purpose + '</div>' +
+             '<div><strong>Quando usar?</strong> ' + desc.when + '</div>' +
+             '<div><strong>Onde se aplica?</strong> ' + desc.where + '</div>' +
+             '<div><strong>Exemplo rápido:</strong> <em>' + desc.example + '</em></div>' +
+             '</div>';
+      }
+
+      h += '<h4 style="font-size:1rem; color:#333; margin-bottom:.5rem;">Calculadoras disponíveis:</h4>' +
+           '<ul class="calc-list" style="margin-top:0;">';
+      g[1].forEach(function (it) {
+        h += '<li><a href="' + it[0] + '.html">' + it[1] + '</a></li>';
+      });
+      h += '</ul></div>';
     });
     box.innerHTML = h;
   }
