@@ -17,23 +17,6 @@
   <aside class="sidebar" id="sidebar"></aside>
   <main class="main">
     <section class="card">
-      <div class="sep-banner" id="sep-banner"></div>
-      <div class="howto"><strong>Como inserir os dados:</strong> Cole <strong>um grupo por linha</strong>: os valores de cada grupo em sua própria linha, separados por <code>;</code> espaço ou tabulação. Use 2 ou mais linhas (uma por grupo). Se seus dados vierem desorganizados (colados de planilha/texto), passe-os antes pelo <a href="conversor-dados.html">Conversor de Dados</a> para padronizar linhas e colunas.</div>
-      <div id="campos"></div>
-      <button class="btn" id="calcular">Calcular</button>
-      <div id="resultado"></div>
-      <div class="md-block">
-        <h3>Saída Markdown</h3>
-        <textarea class="md-out" id="md-out" readonly placeholder="O resultado em Markdown aparecerá aqui após o cálculo."></textarea>
-        <div><button class="btn secondary" id="copiar-md">Copiar Markdown</button></div>
-      </div>
-    </section>
-    <section class="card flow-note">
-      <h3>Calculadoras relacionadas e fluxo de dados</h3>
-      <p>Estas calculadoras se conectam a esta — para preparar dados de entrada ou aprofundar a análise:</p>
-      <ul class="flow-list"><li><a href="kruskal-wallis.html">Kruskal-Wallis</a> — alternativa não paramétrica à ANOVA</li></ul>
-    </section>
-    <section class="card">
       <h2>Como este cálculo ajuda</h2>
       <div class="help-grid">
         <div><h4>O que calcula</h4><p>Decompõe a variância e testa a igualdade das médias dos grupos.</p></div>
@@ -49,6 +32,23 @@
       <p>Um fator com ≥3 níveis; normalidade e homogeneidade de variâncias.</p>
       <h3>Referências</h3>
       <p class="refs">• Guimarães, P. R. B. (2008). <em>Métodos Quantitativos Estatísticos</em>. Curitiba: IESDE Brasil. Cap. Testes de Hipóteses — 3 ou mais amostras (p. 159–164).</p>
+    </section>
+    <section class="card flow-note">
+      <h3>Calculadoras relacionadas e fluxo de dados</h3>
+      <p>Estas calculadoras se conectam a esta — para preparar dados de entrada ou aprofundar a análise:</p>
+      <ul class="flow-list"><li><a href="kruskal-wallis.html">Kruskal-Wallis</a> — alternativa não paramétrica à ANOVA</li></ul>
+    </section>
+    <section class="card">
+      <div class="sep-banner" id="sep-banner"></div>
+      <div class="howto"><strong>Como inserir os dados:</strong> Cole <strong>um grupo por linha</strong>: os valores de cada grupo em sua própria linha, separados por <code>;</code> espaço ou tabulação. Use 2 ou mais linhas (uma por grupo). Se seus dados vierem desorganizados (colados de planilha/texto), passe-os antes pelo <a href="conversor-dados.html">Conversor de Dados</a> para padronizar linhas e colunas.</div>
+      <div id="campos"></div>
+      <button class="btn" id="calcular">Calcular</button>
+      <div id="resultado"></div>
+      <div class="md-block">
+        <h3>Saída Markdown</h3>
+        <textarea class="md-out" id="md-out" readonly placeholder="O resultado em Markdown aparecerá aqui após o cálculo."></textarea>
+        <div><button class="btn secondary" id="copiar-md">Copiar Markdown</button></div>
+      </div>
     </section>
   </main>
 </div>

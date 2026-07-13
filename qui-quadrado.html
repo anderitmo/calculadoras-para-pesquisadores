@@ -17,23 +17,6 @@
   <aside class="sidebar" id="sidebar"></aside>
   <main class="main">
     <section class="card">
-      <div class="sep-banner" id="sep-banner"></div>
-      <div class="howto"><strong>Como inserir os dados:</strong> Organize as <strong>frequências observadas</strong> em uma tabela e cole abaixo: <strong>cada linha da tabela em uma linha</strong>, separando as colunas por <code>;</code> espaço ou tabulação (ex.: <code>18; 12</code> na 1ª linha e <code>7; 23</code> na 2ª). Para aderência, coloque os observados na 1ª linha e os esperados na 2ª (ou deixe a 2ª vazia para esperado uniforme). Se seus dados vierem desorganizados (colados de planilha/texto), passe-os antes pelo <a href="conversor-dados.html">Conversor de Dados</a> para padronizar linhas e colunas.</div>
-      <div id="campos"></div>
-      <button class="btn" id="calcular">Calcular</button>
-      <div id="resultado"></div>
-      <div class="md-block">
-        <h3>Saída Markdown</h3>
-        <textarea class="md-out" id="md-out" readonly placeholder="O resultado em Markdown aparecerá aqui após o cálculo."></textarea>
-        <div><button class="btn secondary" id="copiar-md">Copiar Markdown</button></div>
-      </div>
-    </section>
-    <section class="card flow-note">
-      <h3>Calculadoras relacionadas e fluxo de dados</h3>
-      <p>Estas calculadoras se conectam a esta — para preparar dados de entrada ou aprofundar a análise:</p>
-      <ul class="flow-list"><li><a href="epidemiologia-2x2.html">Epidemiologia 2x2</a> — para tabelas 2×2, obtenha também RR, OR e métricas diagnósticas</li></ul>
-    </section>
-    <section class="card">
       <h2>Como este cálculo ajuda</h2>
       <div class="help-grid">
         <div><h4>O que calcula</h4><p>Calcula χ², gl, p-valor, V de Cramér e tabelas de esperados, resíduos e contribuição. Suporta correção de Yates em 2×2.</p></div>
@@ -49,6 +32,23 @@
       <p>Variáveis categóricas; frequências esperadas idealmente ≥ 5 por célula.</p>
       <h3>Referências</h3>
       <p class="refs">• Pearson, K. (1900). On the criterion that a given system of deviations... <em>Philosophical Magazine</em>, 50(302), 157–175.<br>• Agresti, A. (2018). <em>Statistical Methods for the Social Sciences</em> (5ª ed.). Pearson.<br>• Guimarães, P. R. B. (2008). <em>Métodos Quantitativos Estatísticos</em>. Curitiba: IESDE Brasil. Cap. Testes de Hipóteses — Aderência (p. 164–170).</p>
+    </section>
+    <section class="card flow-note">
+      <h3>Calculadoras relacionadas e fluxo de dados</h3>
+      <p>Estas calculadoras se conectam a esta — para preparar dados de entrada ou aprofundar a análise:</p>
+      <ul class="flow-list"><li><a href="epidemiologia-2x2.html">Epidemiologia 2x2</a> — para tabelas 2×2, obtenha também RR, OR e métricas diagnósticas</li></ul>
+    </section>
+    <section class="card">
+      <div class="sep-banner" id="sep-banner"></div>
+      <div class="howto"><strong>Como inserir os dados:</strong> Organize as <strong>frequências observadas</strong> em uma tabela e cole abaixo: <strong>cada linha da tabela em uma linha</strong>, separando as colunas por <code>;</code> espaço ou tabulação (ex.: <code>18; 12</code> na 1ª linha e <code>7; 23</code> na 2ª). Para aderência, coloque os observados na 1ª linha e os esperados na 2ª (ou deixe a 2ª vazia para esperado uniforme). Se seus dados vierem desorganizados (colados de planilha/texto), passe-os antes pelo <a href="conversor-dados.html">Conversor de Dados</a> para padronizar linhas e colunas.</div>
+      <div id="campos"></div>
+      <button class="btn" id="calcular">Calcular</button>
+      <div id="resultado"></div>
+      <div class="md-block">
+        <h3>Saída Markdown</h3>
+        <textarea class="md-out" id="md-out" readonly placeholder="O resultado em Markdown aparecerá aqui após o cálculo."></textarea>
+        <div><button class="btn secondary" id="copiar-md">Copiar Markdown</button></div>
+      </div>
     </section>
   </main>
 </div>
