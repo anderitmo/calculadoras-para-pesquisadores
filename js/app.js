@@ -246,15 +246,37 @@
   /* ----- Home ----- */
   function renderHome() {
     renderSidebar("home");
-    var box = document.getElementById("grupos");
-    if (!box) return;
-    var h = "";
-    GROUPS.forEach(function (g) {
-      h += '<div class="card group-card"><h3>' + g[0] + "</h3><ul class=\"calc-list\">";
-      g[1].forEach(function (it) { h += '<li><a href="' + it[0] + '.html">' + it[1] + "</a></li>"; });
-      h += "</ul></div>";
-    });
-    box.innerHTML = h;
+    var lists = document.querySelectorAll("[data-group-list]");
+    if (lists.length > 0) {
+      for (var i = 0; i < lists.length; i++) {
+        var el = lists[i];
+        var groupName = el.getAttribute("data-group-list");
+        var g = null;
+        for (var j = 0; j < GROUPS.length; j++) {
+          if (GROUPS[j][0] === groupName) {
+            g = GROUPS[j];
+            break;
+          }
+        }
+        if (g) {
+          var h = "";
+          g[1].forEach(function (it) {
+            h += '<li><a href="' + it[0] + '.html">' + it[1] + '</a></li>';
+          });
+          el.innerHTML = h;
+        }
+      }
+    } else {
+      var box = document.getElementById("grupos");
+      if (!box) return;
+      var h = "";
+      GROUPS.forEach(function (g) {
+        h += '<div class="card group-card"><h3>' + g[0] + "</h3><ul class=\"calc-list\">";
+        g[1].forEach(function (it) { h += '<li><a href="' + it[0] + '.html">' + it[1] + "</a></li>"; });
+        h += "</ul></div>";
+      });
+      box.innerHTML = h;
+    }
   }
 
   global.App = {
