@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alfa de Cronbach — Calculadoras para Pesquisadores</title>
+<meta name="description" content="Consistência interna de uma escala — com ressalvas importantes.">
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+<header class="page-header"><div class="wrap">
+  <p class="eyebrow">Matemática para Pesquisadores</p>
+  <h1>Alfa de Cronbach</h1>
+  <p class="subtitle">Consistência interna de uma escala — com ressalvas importantes.</p>
+</div></header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main">
+    <section class="card">
+      <div class="sep-banner" id="sep-banner"></div>
+      <div id="campos"></div>
+      <button class="btn" id="calcular">Calcular</button>
+      <div id="resultado"></div>
+      <div class="md-block">
+        <h3>Saída Markdown</h3>
+        <textarea class="md-out" id="md-out" readonly placeholder="O resultado em Markdown aparecerá aqui após o cálculo."></textarea>
+        <div><button class="btn secondary" id="copiar-md">Copiar Markdown</button></div>
+      </div>
+    </section>
+    <section class="card">
+      <h2>Como este cálculo ajuda</h2>
+      <div class="help-grid">
+        <div><h4>O que calcula</h4><p>Estima a confiabilidade e o α se cada item for removido.</p></div>
+        <div><h4>Contribuição acadêmica</h4><p>Indicador clássico de consistência interna em escalas e questionários.</p></div>
+        <div><h4>Exemplo simples</h4><p>Uma escala de 5 itens de satisfação com α=0,82 (consistência boa).</p></div>
+      </div>
+    </section>
+    <section class="card">
+      <h2>Método, uso e referência</h2>
+      <h3>Fórmula central</h3>
+      <span class="formula block">α = [k/(k−1)] · (1 − Σσ²ᵢ / σ²_total)</span>
+      <h3>Quando usar</h3>
+      <p>Escalas com múltiplos itens no mesmo construto. <strong>Atenção:</strong> o α pressupõe tau-equivalência e tende a subestimar a confiabilidade quando as cargas dos itens diferem; alternativas recomendadas incluem o ômega de McDonald (ω) e o GLB.</p>
+      <h3>Referências</h3>
+      <p class="refs">• Cronbach, L. J. (1951). Coefficient alpha and the internal structure of tests. <em>Psychometrika</em>, 16(3), 297–334.<br>• Sijtsma, K. (2009). On the use, the misuse, and the very limited usefulness of Cronbach's alpha. <em>Psychometrika</em>, 74(1), 107–120.<br>• McDonald, R. P. (1999). <em>Test Theory: A Unified Treatment</em>. Erlbaum.</p>
+    </section>
+  </main>
+</div>
+<footer class="page-footer">
+  <strong>Sem login e sem envio dos dados informados.</strong>
+  Todos os cálculos ocorrem no seu navegador (JavaScript). Núcleo estatístico validado contra tabelas, R/SciPy e jStat.
+  &nbsp;·&nbsp; Conteúdo educacional; verifique resultados críticos em fonte oficial.
+</footer>
+<script src="js/utils.js"></script>
+<script src="js/stats.js"></script>
+<script src="js/stats_extra.js"></script>
+<script src="js/vendor/jstat.min.js"></script>
+<script src="js/calculators.js"></script>
+<script src="js/app.js"></script>
+<script>App.mountCalculator('alfa-cronbach');</script>
+</body>
+</html>

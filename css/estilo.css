@@ -1,0 +1,267 @@
+/* =========================================================================
+   Calculadoras para Pesquisadores — estilo compartilhado
+   Paleta: bege/creme + verde-escuro. Layout de duas colunas (sidebar + main).
+   ========================================================================= */
+
+:root {
+  --bg:        #f3f0e7;   /* fundo creme */
+  --surface:   #ffffff;   /* cartões */
+  --surface-2: #faf8f2;   /* cartões alternativos */
+  --ink:       #1f2421;   /* texto principal */
+  --ink-soft:  #5c635d;   /* texto secundário */
+  --line:      #e3ddcd;   /* bordas sutis */
+  --green:     #1d6b53;   /* verde-escuro (marca) */
+  --green-2:   #14513f;   /* verde hover */
+  --green-soft:#e7f1ec;   /* destaque suave */
+  --amber:     #b8852a;   /* avisos */
+  --amber-soft:#fbf3e2;
+  --danger:    #9c3b2e;
+  --radius: 10px;
+  --shadow: 0 1px 2px rgba(31,36,33,.06), 0 4px 14px rgba(31,36,33,.04);
+  --maxw: 1180px;
+  --mono: ui-monospace, "SFMono-Regular", "Cascadia Code", Menlo, Consolas, monospace;
+  --sans: "Inter", "Open Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--green); }
+
+/* ---------- Cabeçalho ---------- */
+.page-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  padding: 1.6rem 1.5rem 1.4rem;
+}
+.page-header .wrap { max-width: var(--maxw); margin: 0 auto; }
+.eyebrow {
+  font-size: .72rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--green);
+  margin: 0 0 .35rem;
+}
+.page-header h1 {
+  margin: 0;
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+.page-header .subtitle { margin: .35rem 0 0; color: var(--ink-soft); max-width: 70ch; }
+
+/* ---------- Layout ---------- */
+.layout {
+  max-width: var(--maxw);
+  margin: 1.5rem auto;
+  padding: 0 1.5rem;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* ---------- Sidebar ---------- */
+.sidebar {
+  position: sticky;
+  top: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.1rem 1rem 1.3rem;
+  box-shadow: var(--shadow);
+}
+.sidebar .config-label {
+  font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+  font-weight: 700; color: var(--ink-soft); margin: 0 0 .4rem;
+}
+.sidebar select {
+  width: 100%; padding: .5rem .6rem; border: 1px solid var(--line);
+  border-radius: 6px; background: var(--surface-2); font-family: inherit;
+  color: var(--ink); font-size: .95rem;
+}
+.sidebar nav { margin-top: 1.1rem; }
+.sidebar .nav-group {
+  font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+  font-weight: 700; color: var(--green); margin: 1.1rem 0 .35rem;
+}
+.sidebar .nav-group:first-of-type { margin-top: 0; }
+.sidebar nav a {
+  display: block; padding: .42rem .55rem; margin: .1rem 0;
+  border-radius: 6px; text-decoration: none; color: var(--ink);
+  font-weight: 600; font-size: .96rem;
+}
+.sidebar nav a:hover { background: var(--surface-2); }
+.sidebar nav a.active { background: var(--green-soft); color: var(--green-2); }
+
+/* ---------- Conteúdo principal ---------- */
+.main { min-width: 0; display: flex; flex-direction: column; gap: 1.5rem; }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.4rem 1.5rem;
+  box-shadow: var(--shadow);
+}
+.card > h2 { margin: 0 0 .3rem; font-size: 1.4rem; font-weight: 800; letter-spacing: -.01em; }
+.card > .lead { margin: 0 0 1rem; color: var(--ink-soft); }
+.card h3 { font-size: 1.02rem; margin: 1.2rem 0 .4rem; }
+
+/* Aviso do separador */
+.sep-banner {
+  border-left: 4px solid var(--green);
+  background: var(--green-soft);
+  padding: .65rem .9rem; border-radius: 6px;
+  font-size: .92rem; margin: 0 0 1.1rem;
+}
+.sep-banner strong { color: var(--green-2); }
+
+/* Campos */
+label.field-label { display: block; font-weight: 700; margin: .9rem 0 .35rem; }
+textarea, input[type=text], input[type=number], select.inline {
+  width: 100%; padding: .6rem .7rem; border: 1px solid var(--line);
+  border-radius: 6px; font-family: inherit; font-size: .98rem; color: var(--ink);
+  background: var(--surface-2);
+}
+textarea { min-height: 120px; resize: vertical; font-family: var(--mono); }
+.hint { font-size: .85rem; color: var(--ink-soft); margin: .35rem 0 0; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+
+.chips { display: flex; flex-wrap: wrap; gap: .4rem; margin: .6rem 0; }
+.chip {
+  border: 1px solid var(--line); background: var(--surface);
+  border-radius: 6px; padding: .35rem .7rem; font-weight: 700;
+  cursor: pointer; font-size: .9rem; color: var(--ink);
+}
+.chip:hover { border-color: var(--green); }
+.chip.active { background: var(--green); color: #fff; border-color: var(--green); }
+
+/* Botões */
+.btn {
+  background: var(--green); color: #fff; border: none; cursor: pointer;
+  padding: .65rem 1.3rem; border-radius: 6px; font-size: 1rem; font-weight: 700;
+  font-family: inherit; margin-top: 1rem;
+}
+.btn:hover { background: var(--green-2); }
+.btn.secondary {
+  background: var(--surface); color: var(--ink); border: 1px solid var(--line);
+  font-weight: 600; padding: .55rem 1rem; margin-top: .6rem;
+}
+.btn.secondary:hover { border-color: var(--green); }
+
+/* Resultados */
+.result-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.2rem 0 .4rem; }
+.stat {
+  border: 1px solid var(--line); border-radius: 8px; padding: .85rem 1rem; background: var(--surface-2);
+}
+.stat .k { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); font-weight: 700; }
+.stat .v { font-size: 1.5rem; font-weight: 800; margin-top: .2rem; font-variant-numeric: tabular-nums; }
+
+.notes { margin: .8rem 0 0; padding-left: 1.1rem; }
+.notes li { margin: .25rem 0; color: var(--ink-soft); }
+
+/* Tabelas auxiliares */
+.tables { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1rem; }
+table.aux { border-collapse: collapse; width: 100%; font-size: .92rem; }
+table.aux caption { text-align: left; font-weight: 700; margin-bottom: .35rem; }
+table.aux th, table.aux td { border: 1px solid var(--line); padding: .4rem .6rem; text-align: right; font-variant-numeric: tabular-nums; }
+table.aux th { background: var(--surface-2); }
+table.aux th:first-child, table.aux td:first-child { text-align: left; font-weight: 700; background: var(--surface-2); }
+
+/* Saída Markdown */
+.md-block { margin-top: 1.3rem; }
+.md-block h3 { margin: 0 0 .4rem; }
+textarea.md-out { min-height: 150px; background: var(--surface-2); }
+
+/* Alertas */
+.alert {
+  border-left: 4px solid var(--amber); background: var(--amber-soft);
+  padding: .8rem 1rem; border-radius: 6px; margin: 1rem 0 0; font-size: .93rem;
+}
+.alert strong { color: var(--amber); }
+.alert.danger { border-left-color: var(--danger); background: #fbeeea; }
+.alert.danger strong { color: var(--danger); }
+
+/* Blocos didáticos */
+.help-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+.help-grid h4 { margin: 0 0 .3rem; font-size: 1rem; }
+.help-grid p { margin: 0; color: var(--ink-soft); font-size: .95rem; }
+code, .formula {
+  font-family: var(--mono); background: var(--surface-2);
+  border: 1px solid var(--line); border-radius: 4px; padding: .1rem .35rem; font-size: .92rem;
+}
+.formula.block { display: block; padding: .7rem .9rem; margin: .4rem 0; overflow-x: auto; }
+
+.related a { font-weight: 700; }
+.refs { color: var(--ink-soft); font-size: .95rem; }
+
+footer.page-footer {
+  max-width: var(--maxw); margin: 1rem auto 3rem; padding: 1.2rem 1.5rem;
+  color: var(--ink-soft); font-size: .9rem; border-top: 1px solid var(--line);
+}
+
+/* Toast de cópia */
+.toast {
+  position: fixed; bottom: 1.4rem; left: 50%; transform: translateX(-50%) translateY(1rem);
+  background: var(--green-2); color: #fff; padding: .65rem 1.1rem; border-radius: 8px;
+  opacity: 0; pointer-events: none; transition: all .25s ease; font-weight: 600; z-index: 50;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* Home */
+.home-intro { max-width: 72ch; }
+.group-card h3 { margin-top: 0; color: var(--green-2); }
+.calc-list { columns: 2; column-gap: 1.4rem; margin: 0; padding-left: 1.1rem; }
+.calc-list li { margin: .2rem 0; break-inside: avoid; }
+
+/* Responsivo */
+@media (max-width: 860px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { position: static; }
+  .result-grid, .help-grid, .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .calc-list { columns: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; transition: none !important; }
+}
+
+:focus-visible { outline: 3px solid var(--green); outline-offset: 2px; border-radius: 4px; }
+
+/* ---------- Instrução de entrada e fluxo entre calculadoras ---------- */
+.howto {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: .7rem .9rem;
+  margin: 0 0 1rem;
+  font-size: .93rem;
+  color: var(--ink);
+}
+.howto strong { color: var(--green-2); }
+
+.flow-note { border-left: 4px solid var(--green); }
+.flow-note h3 { margin: 0 0 .3rem; color: var(--green-2); }
+.flow-note p { margin: 0 0 .5rem; color: var(--ink-soft); }
+.flow-list { margin: 0; padding-left: 1.1rem; }
+.flow-list li { margin: .3rem 0; }
+.flow-list a { font-weight: 700; }
+
+/* Campos maiores e mais confortáveis */
+textarea { min-height: 130px; font-size: 1rem; line-height: 1.5; }
+input[type=text], input[type=number] { font-size: 1rem; padding: .7rem .8rem; }
+.field-label { font-size: 1rem; }

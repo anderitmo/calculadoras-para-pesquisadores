@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regressão Logística — Calculadoras para Pesquisadores</title>
+<meta name="description" content="Modela a probabilidade de um desfecho binário (0/1).">
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+<header class="page-header"><div class="wrap">
+  <p class="eyebrow">Matemática para Pesquisadores</p>
+  <h1>Regressão Logística</h1>
+  <p class="subtitle">Modela a probabilidade de um desfecho binário (0/1).</p>
+</div></header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main">
+    <section class="card">
+      <div class="sep-banner" id="sep-banner"></div>
+      <div id="campos"></div>
+      <button class="btn" id="calcular">Calcular</button>
+      <div id="resultado"></div>
+      <div class="md-block">
+        <h3>Saída Markdown</h3>
+        <textarea class="md-out" id="md-out" readonly placeholder="O resultado em Markdown aparecerá aqui após o cálculo."></textarea>
+        <div><button class="btn secondary" id="copiar-md">Copiar Markdown</button></div>
+      </div>
+    </section>
+    <section class="card">
+      <h2>Como este cálculo ajuda</h2>
+      <div class="help-grid">
+        <div><h4>O que calcula</h4><p>Ajusta os coeficientes por máxima verossimilhança (IRLS) e retorna β, EP, z, p e razões de chance (OR).</p></div>
+        <div><h4>Contribuição acadêmica</h4><p>Padrão para desfechos dicotômicos (doença/saúde, aprovação/reprovação); interpretável via OR.</p></div>
+        <div><h4>Exemplo simples</h4><p>Probabilidade de aprovação em função das horas de estudo.</p></div>
+      </div>
+    </section>
+    <section class="card">
+      <h2>Método, uso e referência</h2>
+      <h3>Fórmula central</h3>
+      <span class="formula block">logit(p) = β₀ + β₁X₁ + … ;  OR = e^β</span>
+      <h3>Quando usar</h3>
+      <p>Variável resposta binária e preditores quantitativos/categóricos.</p>
+      <h3>Referências</h3>
+      <p class="refs">• Hosmer, D. W., Lemeshow, S., & Sturdivant, R. X. (2013). <em>Applied Logistic Regression</em> (3ª ed.). Wiley.</p>
+    </section>
+  </main>
+</div>
+<footer class="page-footer">
+  <strong>Sem login e sem envio dos dados informados.</strong>
+  Todos os cálculos ocorrem no seu navegador (JavaScript). Núcleo estatístico validado contra tabelas, R/SciPy e jStat.
+  &nbsp;·&nbsp; Conteúdo educacional; verifique resultados críticos em fonte oficial.
+</footer>
+<script src="js/utils.js"></script>
+<script src="js/stats.js"></script>
+<script src="js/stats_extra.js"></script>
+<script src="js/vendor/jstat.min.js"></script>
+<script src="js/calculators.js"></script>
+<script src="js/app.js"></script>
+<script>App.mountCalculator('regressao-logistica');</script>
+</body>
+</html>

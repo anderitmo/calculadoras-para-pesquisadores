@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Distribuição Binomial — Calculadoras para Pesquisadores</title>
+<meta name="description" content="Probabilidades para o número de sucessos em n tentativas.">
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+<header class="page-header"><div class="wrap">
+  <p class="eyebrow">Matemática para Pesquisadores</p>
+  <h1>Distribuição Binomial</h1>
+  <p class="subtitle">Probabilidades para o número de sucessos em n tentativas.</p>
+</div></header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main">
+    <section class="card">
+      <div class="sep-banner" id="sep-banner"></div>
+      <div id="campos"></div>
+      <button class="btn" id="calcular">Calcular</button>
+      <div id="resultado"></div>
+      <div class="md-block">
+        <h3>Saída Markdown</h3>
+        <textarea class="md-out" id="md-out" readonly placeholder="O resultado em Markdown aparecerá aqui após o cálculo."></textarea>
+        <div><button class="btn secondary" id="copiar-md">Copiar Markdown</button></div>
+      </div>
+    </section>
+    <section class="card">
+      <h2>Como este cálculo ajuda</h2>
+      <div class="help-grid">
+        <div><h4>O que calcula</h4><p>Calcula P(X=k), P(X≤k), média (np) e variância (np(1−p)).</p></div>
+        <div><h4>Contribuição acadêmica</h4><p>Modela eventos dicotômicos repetidos (sucesso/fracasso) com p constante.</p></div>
+        <div><h4>Exemplo simples</h4><p>10 lançamentos de moeda: probabilidade de exatamente 6 caras.</p></div>
+      </div>
+    </section>
+    <section class="card">
+      <h2>Método, uso e referência</h2>
+      <h3>Fórmula central</h3>
+      <span class="formula block">P(X=k) = C(n,k) pᵏ (1−p)ⁿ⁻ᵏ</span>
+      <h3>Quando usar</h3>
+      <p>n ensaios independentes, dois resultados possíveis e p fixo.</p>
+      <h3>Referências</h3>
+      <p class="refs">• Guimarães, P. R. B. (2008). <em>Métodos Quantitativos Estatísticos</em>. Curitiba: IESDE Brasil. Cap. Binomial, Poisson e Normal (p. 90–93).</p>
+    </section>
+  </main>
+</div>
+<footer class="page-footer">
+  <strong>Sem login e sem envio dos dados informados.</strong>
+  Todos os cálculos ocorrem no seu navegador (JavaScript). Núcleo estatístico validado contra tabelas, R/SciPy e jStat.
+  &nbsp;·&nbsp; Conteúdo educacional; verifique resultados críticos em fonte oficial.
+</footer>
+<script src="js/utils.js"></script>
+<script src="js/stats.js"></script>
+<script src="js/stats_extra.js"></script>
+<script src="js/vendor/jstat.min.js"></script>
+<script src="js/calculators.js"></script>
+<script src="js/app.js"></script>
+<script>App.mountCalculator('distribuicao-binomial');</script>
+</body>
+</html>
