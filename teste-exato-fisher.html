@@ -17,17 +17,6 @@
   <aside class="sidebar" id="sidebar"></aside>
   <main class="main">
     <section class="card">
-      <div class="sep-banner" id="sep-banner"></div>
-      <div id="campos"></div>
-      <button class="btn" id="calcular">Calcular</button>
-      <div id="resultado"></div>
-      <div class="md-block">
-        <h3>Saída Markdown</h3>
-        <textarea class="md-out" id="md-out" readonly placeholder="O resultado em Markdown aparecerá aqui após o cálculo."></textarea>
-        <div><button class="btn secondary" id="copiar-md">Copiar Markdown</button></div>
-      </div>
-    </section>
-    <section class="card">
       <h2>Como este cálculo ajuda</h2>
       <div class="help-grid">
         <div><h4>O que calcula</h4><p>Calcula a probabilidade exata hipergeométrica de obter a tabela de contingência 2x2 observada sob a hipótese nula de independência.</p></div>
@@ -43,6 +32,17 @@
       <p>Tabelas de contingência 2x2 com amostras pequenas, onde uma ou mais células possuem frequências esperadas menores que 5.</p>
       <h3>Referências</h3>
       <p class="refs">• Fisher, R. A. (1922). On the interpretation of chi-square from contingency tables, and the calculation of P. <em>Journal of the Royal Statistical Society</em>, 85, 87-94.</p>
+    </section>
+    <section class="card">
+      <div class="sep-banner" id="sep-banner"></div>
+      <div id="campos"></div>
+      <button class="btn" id="calcular">Calcular</button>
+      <div id="resultado"></div>
+      <div class="md-block">
+        <h3>Saída Markdown</h3>
+        <textarea class="md-out" id="md-out" readonly placeholder="O resultado em Markdown aparecerá aqui após o cálculo."></textarea>
+        <div><button class="btn secondary" id="copiar-md">Copiar Markdown</button></div>
+      </div>
     </section>
   </main>
 </div>
