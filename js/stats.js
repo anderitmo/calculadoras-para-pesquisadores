@@ -366,7 +366,9 @@
     return Math.max.apply(null, a) - Math.min.apply(null, a);
   };
   Stats.cv = function (a, population) {
-    return (Stats.sd(a, population) / Stats.mean(a)) * 100;
+    var m = Stats.mean(a);
+    if (m === 0) return NaN;
+    return (Stats.sd(a, population) / m) * 100;
   };
 
   // Percentil — interpolação linear (método "linear"/R type 7), igual a Excel PERCENTILE.INC
@@ -428,6 +430,9 @@
       dx += (x[i] - mx) * (x[i] - mx);
       dy += (y[i] - my) * (y[i] - my);
     }
+    if (dx === 0 || dy === 0) {
+      throw new Error("Não é possível calcular a correlação porque pelo menos uma das variáveis tem variância zero (todos os valores são iguais).");
+    }
     return num / Math.sqrt(dx * dy);
   };
 
@@ -462,6 +467,9 @@
       sxx += (x[i] - mx) * (x[i] - mx);
       syy += (y[i] - my) * (y[i] - my);
     }
+    if (sxx === 0) {
+      throw new Error("Não é possível realizar a regressão porque a variável preditora X tem variância zero (todos os valores são iguais).");
+    }
     var b = sxy / sxx;
     var a = my - b * mx;
     var r = sxy / Math.sqrt(sxx * syy);
@@ -469,6 +477,9 @@
     // erro padrão dos coeficientes
     var sse = syy - b * sxy;
     var dfRes = n - 2;
+    if (dfRes <= 0) {
+      throw new Error("Número insuficiente de observações para estimar os parâmetros da regressão.");
+    }
     var mse = sse / dfRes;
     var seB = Math.sqrt(mse / sxx);
     var seA = Math.sqrt(mse * (1 / n + (mx * mx) / sxx));
@@ -495,6 +506,9 @@
     var n = sample.length;
     var m = Stats.mean(sample);
     var s = Stats.sd(sample, false);
+    if (s === 0) {
+      throw new Error("O desvio padrão da amostra é zero (todos os valores são iguais), impossibilitando o cálculo da estatística t.");
+    }
     var t = (m - mu0) / (s / Math.sqrt(n));
     var df = n - 1;
     return { t: t, df: df, mean: m, sd: s, n: n, pValue: Stats.tTestPValue(t, df) };
@@ -506,6 +520,9 @@
     var na = a.length, nb = b.length;
     var ma = Stats.mean(a), mb = Stats.mean(b);
     var va = Stats.variance(a, false), vb = Stats.variance(b, false);
+    if (va === 0 && vb === 0) {
+      throw new Error("Ambas as amostras possuem variância igual a zero (todos os valores são iguais), impossibilitando o cálculo da estatística t.");
+    }
     var t, df;
     if (welch) {
       var se = Math.sqrt(va / na + vb / nb);
@@ -567,6 +584,9 @@
       ssb += g.length * (mg - grand) * (mg - grand);
       g.forEach(function (x) { ssw += (x - mg) * (x - mg); });
     });
+    if (ssw === 0) {
+      throw new Error("A variância interna dos grupos é zero (todos os valores dentro de cada grupo são idênticos), impedindo a realização da ANOVA.");
+    }
     var dfb = k - 1;
     var dfw = N - k;
     var msb = ssb / dfb;
@@ -769,9 +789,12 @@
   Stats.multipleRegression = function (X, y) {
     var n = X.length;
     var p = X[0].length;
+    var cols = p + 1;
+    if (n <= cols) {
+      throw new Error("Número insuficiente de observações. O número de observações (n = " + n + ") deve ser maior que o número de parâmetros a estimar (p + 1 = " + cols + ").");
+    }
     // adiciona intercepto
     var Xa = X.map(function (row) { return [1].concat(row); });
-    var cols = p + 1;
     // X'X
     var XtX = zeros(cols, cols);
     var Xty = new Array(cols).fill(0);
@@ -944,6 +967,165 @@
       out.push(k - 1);
     }
     return out;
+  };
+
+  /* ============================================================= *
+   *  Novas Funções de Matemática Estatística                       *
+   * ============================================================= */
+
+  Stats.geometricMean = function (a) {
+    if (a.some(function (x) { return x <= 0; })) {
+      throw new Error("Todos os valores devem ser estritamente positivos (>0) para o cálculo da média geométrica.");
+    }
+    var sum = a.reduce(function (s, x) { return s + Math.log(x); }, 0);
+    return Math.exp(sum / a.length);
+  };
+
+  Stats.harmonicMean = function (a) {
+    if (a.some(function (x) { return x === 0; })) {
+      throw new Error("Nenhum valor pode ser igual a zero para o cálculo da média harmônica.");
+    }
+    if (a.some(function (x) { return x < 0; })) {
+      throw new Error("Todos os valores devem ser estritamente positivos (>0) para o cálculo da média harmônica.");
+    }
+    var sum = a.reduce(function (s, x) { return s + (1 / x); }, 0);
+    return a.length / sum;
+  };
+
+  Stats.fTestTwoVariances = function (a, b) {
+    var va = Stats.variance(a, false);
+    var vb = Stats.variance(b, false);
+    if (va === 0 || vb === 0) {
+      throw new Error("As variâncias não podem ser zero.");
+    }
+    var F, df1, df2;
+    if (va >= vb) {
+      F = va / vb;
+      df1 = a.length - 1;
+      df2 = b.length - 1;
+    } else {
+      F = vb / va;
+      df1 = b.length - 1;
+      df2 = a.length - 1;
+    }
+    var pCDF = Stats.fCDF(F, df1, df2);
+    var pVal = 2 * (1 - pCDF);
+    if (pVal > 1) pVal = 1;
+    return { F: F, df1: df1, df2: df2, pValue: pVal, varA: va, varB: vb };
+  };
+
+  Stats.fisherExact = function (a, b, c, d) {
+    var R1 = a + b;
+    var R2 = c + d;
+    var C1 = a + c;
+    var C2 = b + d;
+    var N = a + b + c + d;
+
+    function logHypergeometric(x) {
+      var y = R1 - x;
+      var z = C1 - x;
+      var w = R2 - z;
+      return logGamma(R1 + 1) + logGamma(R2 + 1) + logGamma(C1 + 1) + logGamma(C2 + 1)
+        - logGamma(x + 1) - logGamma(y + 1) - logGamma(z + 1) - logGamma(w + 1)
+        - logGamma(N + 1);
+    }
+
+    var obsLogP = logHypergeometric(a);
+    var obsP = Math.exp(obsLogP);
+
+    var minA = Math.max(0, R1 - C2);
+    var maxA = Math.min(R1, C1);
+
+    var pValue = 0;
+    for (var x = minA; x <= maxA; x++) {
+      var logP = logHypergeometric(x);
+      if (logP <= obsLogP + 1e-9) {
+        pValue += Math.exp(logP);
+      }
+    }
+    if (pValue > 1) pValue = 1;
+    return { pValue: pValue, observedP: obsP };
+  };
+
+  Stats.kolmogorovSmirnov = function (sample, mu, sigma) {
+    var n = sample.length;
+    var sorted = sample.slice().sort(function (x, y) { return x - y; });
+    var dMax = 0;
+    for (var i = 0; i < n; i++) {
+      var z = (sorted[i] - mu) / sigma;
+      var cdf = Stats.normalCDF(z);
+      var d1 = (i + 1) / n - cdf;
+      var d2 = cdf - i / n;
+      var d = Math.max(Math.abs(d1), Math.abs(d2));
+      if (d > dMax) dMax = d;
+    }
+    var lambda = (Math.sqrt(n) + 0.12 + 0.11 / Math.sqrt(n)) * dMax;
+    var sum = 0;
+    for (var j = 1; j <= 100; j++) {
+      var term = Math.pow(-1, j - 1) * Math.exp(-2 * j * j * lambda * lambda);
+      sum += term;
+      if (Math.abs(term) < 1e-15) break;
+    }
+    var pVal = 2 * sum;
+    pVal = Math.max(0, Math.min(1, pVal));
+    return { D: dMax, pValue: pVal, mean: mu, sd: sigma };
+  };
+
+  Stats.zTestOneProportion = function (x, n, p0) {
+    if (p0 <= 0 || p0 >= 1) throw new Error("A proporção de referência p0 deve estar entre 0 e 1.");
+    if (x < 0 || x > n) throw new Error("O número de sucessos x deve ser entre 0 e n.");
+    var pHat = x / n;
+    var se = Math.sqrt((p0 * (1 - p0)) / n);
+    var z = (pHat - p0) / se;
+    var pVal = 2 * (1 - Stats.normalCDF(Math.abs(z)));
+    var zCrit = Stats.normalInv(0.975);
+    var denom = 1 + (zCrit * zCrit) / n;
+    var center = pHat + (zCrit * zCrit) / (2 * n);
+    var spread = zCrit * Math.sqrt((pHat * (1 - pHat)) / n + (zCrit * zCrit) / (4 * n * n));
+    var lower = (center - spread) / denom;
+    var upper = (center + spread) / denom;
+    return { pHat: pHat, z: z, pValue: pVal, lower: lower, upper: upper };
+  };
+
+  Stats.zTestTwoProportions = function (x1, n1, x2, n2) {
+    if (x1 < 0 || x1 > n1 || x2 < 0 || x2 > n2) throw new Error("Número de sucessos inválido.");
+    if (n1 === 0 || n2 === 0) throw new Error("As tentativas devem ser maiores que zero.");
+    var p1 = x1 / n1;
+    var p2 = x2 / n2;
+    var pPooled = (x1 + x2) / (n1 + n2);
+    if (pPooled === 0 || pPooled === 1) {
+      throw new Error("Proporção combinada é zero ou um, impossibilitando calcular o teste Z.");
+    }
+    var se = Math.sqrt(pPooled * (1 - pPooled) * (1 / n1 + 1 / n2));
+    var z = (p1 - p2) / se;
+    var pVal = 2 * (1 - Stats.normalCDF(Math.abs(z)));
+    var zCrit = Stats.normalInv(0.975);
+    var diff = p1 - p2;
+    var seDiff = Math.sqrt((p1 * (1 - p1)) / n1 + (p2 * (1 - p2)) / n2);
+    var lower = diff - zCrit * seDiff;
+    var upper = diff + zCrit * seDiff;
+    return { p1: p1, p2: p2, diff: diff, z: z, pValue: pVal, lower: lower, upper: upper };
+  };
+
+  Stats.cohensDOneSample = function (mean, mu0, sd) {
+    if (sd === 0) return 0;
+    return Math.abs(mean - mu0) / sd;
+  };
+
+  Stats.cohensDTwoSamples = function (mean1, sd1, n1, mean2, sd2, n2) {
+    var sPooled = Math.sqrt(((n1 - 1) * sd1 * sd1 + (n2 - 1) * sd2 * sd2) / (n1 + n2 - 2));
+    if (sPooled === 0) return 0;
+    return Math.abs(mean1 - mean2) / sPooled;
+  };
+
+  Stats.cohensDPaired = function (meanDiff, sdDiff) {
+    if (sdDiff === 0) return 0;
+    return Math.abs(meanDiff) / sdDiff;
+  };
+
+  Stats.etaSquared = function (ssb, sst) {
+    if (sst === 0) return 0;
+    return ssb / sst;
   };
 
   // export
