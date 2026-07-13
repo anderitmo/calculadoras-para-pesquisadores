@@ -6,6 +6,55 @@
 <title>Calculadoras para Pesquisadores — Calculadoras para Pesquisadores</title>
 <meta name="description" content="Calculadoras estatísticas que rodam 100% no navegador, sem envio de dados.">
 <link rel="stylesheet" href="css/estilo.css">
+<style>
+.category-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 1.5rem;
+}
+.info-item {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+}
+.info-item strong {
+  display: block;
+  color: var(--green-2);
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+.info-item p {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+.info-item:last-child {
+  grid-column: span 2;
+}
+.calculators-title {
+  margin-top: 0;
+  color: var(--green-2);
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-bottom: 1px dashed var(--line);
+  padding-bottom: 0.35rem;
+}
+
+@media (max-width: 600px) {
+  .category-info {
+    grid-template-columns: 1fr;
+  }
+  .info-item:last-child {
+    grid-column: span 1;
+  }
+}
+</style>
 </head>
 <body>
 <header class="page-header"><div class="wrap">
@@ -20,7 +69,181 @@
       <h2>Comece por aqui</h2>
       <p class="lead">Escolha uma calculadora na lista. Você pode definir o separador decimal (vírgula ou ponto) na barra lateral; a preferência fica salva no seu navegador. Cada página traz a fórmula, quando usar, um exemplo e referências, além de gerar um resumo em Markdown pronto para colar no seu relatório.</p>
     </section>
-    <div id="grupos"></div>
+
+    <!-- Estatística Descritiva -->
+    <section class="card group-card">
+      <h2>Estatística Descritiva</h2>
+      <div class="category-info">
+        <div class="info-item">
+          <strong>O que é?</strong>
+          <p>É o ramo da estatística que visa resumir, organizar, descrever e apresentar um conjunto de dados brutos de forma compreensível, sem fazer generalizações para uma população maior.</p>
+        </div>
+        <div class="info-item">
+          <strong>Para que serve?</strong>
+          <p>Serve para simplificar grandes volumes de dados através de tabelas, gráficos e medidas numéricas de síntese (como tendência central e dispersão), permitindo identificar padrões, tendências e anomalias nos dados coletados.</p>
+        </div>
+        <div class="info-item">
+          <strong>Quando usar?</strong>
+          <p>Sempre que você coletar novos dados e precisar realizar a análise exploratória inicial para conhecer as características básicas do seu conjunto de dados, antes de aplicar técnicas estatísticas mais complexas.</p>
+        </div>
+        <div class="info-item">
+          <strong>Onde se aplica?</strong>
+          <p>Aplica-se em relatórios de desempenho empresarial, estudos demográficos, resumos de notas escolares, monitoramento de métricas de saúde pública e em praticamente qualquer pesquisa científica na sua fase inicial de caracterização da amostra.</p>
+        </div>
+        <div class="info-item">
+          <strong>Exemplos rápidos</strong>
+          <p>Apresentar a média de idade e o desvio padrão dos participantes de uma pesquisa acadêmica; criar um histograma para visualizar a distribuição dos salários em uma empresa; gerar uma tabela de frequências para contar a quantidade de clientes por região.</p>
+        </div>
+      </div>
+      <h3 class="calculators-title">Calculadoras de Estatística Descritiva</h3>
+      <ul class="calc-list" data-group-list="Estatística Descritiva"></ul>
+    </section>
+
+    <!-- Probabilidade -->
+    <section class="card group-card">
+      <h2>Probabilidade</h2>
+      <div class="category-info">
+        <div class="info-item">
+          <strong>O que é?</strong>
+          <p>É o ramo da matemática que estuda a incerteza e a chance de ocorrência de eventos ou experimentos aleatórios, fornecendo a base teórica para a modelagem matemática de fenômenos que envolvem o acaso.</p>
+        </div>
+        <div class="info-item">
+          <strong>Para que serve?</strong>
+          <p>Serve para calcular numericamente quão provável é um determinado resultado acontecer, permitindo prever comportamentos esperados de variáveis aleatórias sob diferentes distribuições de probabilidade (como Normal, Binomial e Poisson).</p>
+        </div>
+        <div class="info-item">
+          <strong>Quando usar?</strong>
+          <p>Quando você trabalha com eventos incertos, cenários de risco ou precisa determinar as chances teóricas de um evento ocorrer com base em parâmetros conhecidos ou suposições probabilísticas.</p>
+        </div>
+        <div class="info-item">
+          <strong>Onde se aplica?</strong>
+          <p>Aplica-se na precificação de seguros, jogos de azar, modelagem de tráfego de redes de telecomunicações, previsão meteorológica, controle de qualidade industrial (taxa de defeitos) e na fundamentação de testes de hipóteses estatísticas.</p>
+        </div>
+        <div class="info-item">
+          <strong>Exemplos rápidos</strong>
+          <p>Calcular a chance de um paciente contrair uma doença sabendo a taxa de incidência (Poisson); determinar a probabilidade de um componente falhar em menos de um ano usando a distribuição Normal; prever a chance de obter exatamente 3 caras em 5 lançamentos de moeda (Binomial).</p>
+        </div>
+      </div>
+      <h3 class="calculators-title">Calculadoras de Probabilidade</h3>
+      <ul class="calc-list" data-group-list="Probabilidade"></ul>
+    </section>
+
+    <!-- Inferência -->
+    <section class="card group-card">
+      <h2>Inferência</h2>
+      <div class="category-info">
+        <div class="info-item">
+          <strong>O que é?</strong>
+          <p>É o conjunto de métodos que permite tirar conclusões científicas, fazer generalizações ou tomar decisões sobre uma população inteira com base nas informações coletadas de uma amostra representativa dessa população.</p>
+        </div>
+        <div class="info-item">
+          <strong>Para que serve?</strong>
+          <p>Serve para testar hipóteses científicas (verificando se diferenças ou relações são estatisticamente significativas), estimar parâmetros populacionais desconhecidos através de intervalos de confiança e modelar relações de causa e efeito (regressões).</p>
+        </div>
+        <div class="info-item">
+          <strong>Quando usar?</strong>
+          <p>Quando não for viável ou econômico analisar toda a população (censo) e você precisar tomar uma decisão ou validar uma hipótese científica para o todo usando apenas um subgrupo (amostra).</p>
+        </div>
+        <div class="info-item">
+          <strong>Onde se aplica?</strong>
+          <p>Aplica-se em testes clínicos de novos medicamentos, pesquisas eleitorais, testes de usabilidade de software (teste A/B), estudos de impacto socioeconômico e na validação científica de teorias de causa e efeito.</p>
+        </div>
+        <div class="info-item">
+          <strong>Exemplos rápidos</strong>
+          <p>Realizar um Teste t para comparar a eficácia de um novo remédio contra um placebo; estimar o Intervalo de Confiança da renda média de uma cidade; calcular o tamanho amostral necessário para uma pesquisa de mercado com margem de erro controlada.</p>
+        </div>
+      </div>
+      <h3 class="calculators-title">Calculadoras de Inferência</h3>
+      <ul class="calc-list" data-group-list="Inferência"></ul>
+    </section>
+
+    <!-- Não Paramétricos -->
+    <section class="card group-card">
+      <h2>Não Paramétricos</h2>
+      <div class="category-info">
+        <div class="info-item">
+          <strong>O que é?</strong>
+          <p>É uma categoria de testes estatísticos que não exige que os dados sigam uma distribuição de probabilidade específica (como a distribuição normal) e não dependem de estimativas de parâmetros populacionais como média e variância.</p>
+        </div>
+        <div class="info-item">
+          <strong>Para que serve?</strong>
+          <p>Serve para analisar dados ordinais (como escalas de opinião), amostras muito pequenas, ou dados contínuos que possuem forte assimetria ou outliers extremos que violam os pressupostos dos testes paramétricos convencionais.</p>
+        </div>
+        <div class="info-item">
+          <strong>Quando usar?</strong>
+          <p>Quando os pressupostos dos testes paramétricos (como normalidade e homocedasticidade dos dados) não são atendidos, ou quando as variáveis de estudo são medidas em escala ordinal (como escala Likert).</p>
+        </div>
+        <div class="info-item">
+          <strong>Onde se aplica?</strong>
+          <p>Aplica-se no estudo de percepção do consumidor (pesquisas de satisfação), psicologia comportamental, ensaios clínicos com amostras reduzidas e análises ambientais onde os dados biológicos costumam ser altamente assimétricos.</p>
+        </div>
+        <div class="info-item">
+          <strong>Exemplos rápidos</strong>
+          <p>Aplicar o Teste de Mann-Whitney para comparar a satisfação entre dois grupos de clientes (escala de 1 a 5); usar o Teste de Kruskal-Wallis para comparar o tempo de reação sob três medicamentos diferentes quando a distribuição é altamente distorcida; utilizar a Correlação de Spearman para avaliar a associação entre cargos ocupados e tempo de empresa.</p>
+        </div>
+      </div>
+      <h3 class="calculators-title">Calculadoras de Testes Não Paramétricos</h3>
+      <ul class="calc-list" data-group-list="Não Paramétricos"></ul>
+    </section>
+
+    <!-- Multivariada -->
+    <section class="card group-card">
+      <h2>Multivariada</h2>
+      <div class="category-info">
+        <div class="info-item">
+          <strong>O que é?</strong>
+          <p>É o ramo da estatística que estuda e analisa simultaneamente múltiplas variáveis medidas para cada indivíduo ou objeto sob investigação, considerando as correlações e interdependências entre elas.</p>
+        </div>
+        <div class="info-item">
+          <strong>Para que serve?</strong>
+          <p>Serve para simplificar a complexidade dos dados de alta dimensão, reduzindo o número de variáveis (como na Análise de Componentes Principais - PCA), identificando agrupamentos naturais (clusters) e modelando fenômenos complexos influenciados por múltiplos fatores concorrentes.</p>
+        </div>
+        <div class="info-item">
+          <strong>Quando usar?</strong>
+          <p>Quando seu problema envolve várias variáveis de interesse correlacionadas e analisá-las de forma isolada (univariada) faria perder informações essenciais sobre as interações e a estrutura conjunta dos dados.</p>
+        </div>
+        <div class="info-item">
+          <strong>Onde se aplica?</strong>
+          <p>Aplica-se em reconhecimento de padrões e inteligência artificial, genômica (expressão de milhares de genes), segmentação de mercado de clientes, análises macroeconômicas complexas e estudos ecológicos de biodiversidade.</p>
+        </div>
+        <div class="info-item">
+          <strong>Exemplos rápidos</strong>
+          <p>Rodar uma Regressão Múltipla para prever o preço de um imóvel com base em área, número de quartos, idade e localização; aplicar PCA para condensar 50 indicadores financeiros de empresas em apenas 3 componentes principais; gerar uma Matriz de Correlação para identificar de uma só vez as forças de associação entre dezenas de exames de sangue.</p>
+        </div>
+      </div>
+      <h3 class="calculators-title">Calculadoras de Análise Multivariada</h3>
+      <ul class="calc-list" data-group-list="Multivariada"></ul>
+    </section>
+
+    <!-- Outras Ferramentas -->
+    <section class="card group-card">
+      <h2>Outras Ferramentas</h2>
+      <div class="category-info">
+        <div class="info-item">
+          <strong>O que é?</strong>
+          <p>É um conjunto diversificado de utilitários de suporte e análises complementares que auxiliam os pesquisadores na preparação de dados, confiabilidade de instrumentos de medida, e consultas rápidas a tabelas estatísticas de referência.</p>
+        </div>
+        <div class="info-item">
+          <strong>Para que serve?</strong>
+          <p>Serve para realizar tarefas essenciais de apoio à pesquisa científica, tais como avaliar a consistência interna de questionários (como o Alfa de Cronbach), converter formatos de dados para análises externas, gerar sequências aleatórias para sorteios de amostras ou obter probabilidades exatas em estudos epidemiológicos.</p>
+        </div>
+        <div class="info-item">
+          <strong>Quando usar?</strong>
+          <p>Quando você precisa estruturar ou limpar seus dados, testar a qualidade psicométrica de um questionário antes da coleta principal, realizar processos de randomização, ou calcular métricas de risco clínico em tabelas de contingência médica.</p>
+        </div>
+        <div class="info-item">
+          <strong>Onde se aplica?</strong>
+          <p>Aplica-se na validação de testes psicológicos e educacionais, no planejamento de ensaios clínicos randomizados, em triagens epidemiológicas de saúde pública e no fluxo diário de formatação de dados para ferramentas como R ou SPSS.</p>
+        </div>
+        <div class="info-item">
+          <strong>Exemplos rápidos</strong>
+          <p>Calcular o Alfa de Cronbach para verificar a confiabilidade de uma escala psicométrica recém-criada; gerar uma lista de números aleatórios para sortear os participantes de uma amostra; utilizar o Conversor de Dados para transpor dados separados por vírgulas em vetores prontos para análise; usar a epidemiologia 2x2 para calcular a Razão de Chances (Odds Ratio) de um grupo de risco exposto a um fator ambiental.</p>
+        </div>
+      </div>
+      <h3 class="calculators-title">Outras Ferramentas e Utilitários</h3>
+      <ul class="calc-list" data-group-list="Outras Ferramentas"></ul>
+    </section>
+
   </main>
 </div>
 <footer class="page-footer">
