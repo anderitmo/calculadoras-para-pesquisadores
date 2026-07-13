@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tamanho de Amostra — Calculadoras para Pesquisadores</title>
-<meta name="description" content="Quantos casos para uma margem de erro desejada.">
+<title>Teste de Homocedasticidade — Calculadoras para Pesquisadores</title>
+<meta name="description" content="Teste de igualdade de variâncias para comparar a dispersão entre dois grupos independentes.">
 <link rel="stylesheet" href="css/estilo.css">
 </head>
 <body>
 <header class="page-header"><div class="wrap">
   <p class="eyebrow">Matemática para Pesquisadores</p>
-  <h1>Tamanho de Amostra</h1>
-  <p class="subtitle">Quantos casos para uma margem de erro desejada.</p>
+  <h1>Teste de Homocedasticidade</h1>
+  <p class="subtitle">Teste de igualdade de variâncias para comparar a dispersão entre dois grupos independentes.</p>
 </div></header>
 <div class="layout">
   <aside class="sidebar" id="sidebar"></aside>
@@ -30,19 +30,19 @@
     <section class="card">
       <h2>Como este cálculo ajuda</h2>
       <div class="help-grid">
-        <div><h4>O que calcula</h4><p>Calcula o n mínimo para a margem de erro e a confiança escolhidas.</p></div>
-        <div><h4>Contribuição acadêmica</h4><p>Planejamento amostral: equilibra precisão e custo antes da coleta.</p></div>
-        <div><h4>Exemplo simples</h4><p>Para E=0,5, σ=2 e 95%, n ≈ 62.</p></div>
+        <div><h4>O que calcula</h4><p>Realiza o Teste F para verificar se duas amostras independentes possuem variâncias populacionais estatisticamente homogêneas.</p></div>
+        <div><h4>Contribuição acadêmica</h4><p>A homogeneidade de variâncias (homocedasticidade) é um pressuposto fundamental de testes paramétricos clássicos, como o teste t de Student para duas amostras independentes.</p></div>
+        <div><h4>Exemplo simples</h4><p>Verificar se a dispersão das notas do Grupo A é estatisticamente semelhante à do Grupo B antes de aplicar o teste t.</p></div>
       </div>
     </section>
     <section class="card">
       <h2>Método, uso e referência</h2>
       <h3>Fórmula central</h3>
-      <span class="formula block">n = ( z₍α/2₎ · σ / E )²</span>
+      <span class="formula block">F = s₁² / s₂² &nbsp;&nbsp;(onde s₁² ≥ s₂²)</span>
       <h3>Quando usar</h3>
-      <p>Dimensionar amostras para estimar uma média (σ conhecido/estimado).</p>
+      <p>Para comparar a variabilidade de duas populações normais e independentes, ou como etapa preliminar ao teste t bilateral.</p>
       <h3>Referências</h3>
-      <p class="refs">• Guimarães, P. R. B. (2008). <em>Métodos Quantitativos Estatísticos</em>. Curitiba: IESDE Brasil. Cap. Estimação de Parâmetros — Erro e Tamanho (p. 123–130).<br>• IJMRA. (2023). An Overview of Quantitative Research Methods. <em>International Journal of Multidisciplinary Research and Analysis</em>, 06(08), 3794–3803.</p>
+      <p class="refs">• Guimarães, P. R. B. (2008). <em>Métodos Quantitativos Estatísticos</em>. Curitiba: IESDE Brasil. Cap. Testes de Hipóteses — duas amostras independentes (p. 149–155).</p>
     </section>
   </main>
 </div>
@@ -57,6 +57,6 @@
 <script src="js/vendor/jstat.min.js"></script>
 <script src="js/calculators.js"></script>
 <script src="js/app.js"></script>
-<script>App.mountCalculator('tamanho-amostra');</script>
+<script>App.mountCalculator('teste-homocedasticidade');</script>
 </body>
 </html>

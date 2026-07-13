@@ -10,16 +10,18 @@
   /* ----- Registro de navegação (grupos -> [slug, nome]) ----- */
   var GROUPS = [
     ["Estatística Descritiva", [
-      ["media-aritmetica","Média Aritmética"],["mediana","Mediana"],["moda","Moda"],
+      ["media-aritmetica","Média Aritmética"],["media-geometrica-harmonica","Média Geométrica e Harmônica"],["mediana","Mediana"],["moda","Moda"],
       ["desvio-padrao","Desvio Padrão"],["variancia","Variância"],["quartis","Quartis"],
       ["amplitude","Amplitude"],["coeficiente-variacao","Coeficiente de Variação"],
       ["assimetria-curtose","Assimetria e Curtose"],["tabela-frequencias","Tabela de Frequências"],
       ["histograma","Histograma"],["boxplot","Boxplot"],
+      ["correlacao-pearson","Correlação de Pearson"],["tamanho-efeito","Tamanho do Efeito (Effect Size)"],
     ]],
     ["Probabilidade", [
       ["distribuicao-normal","Distribuição Normal (Z)"],["distribuicao-binomial","Distribuição Binomial"],
       ["distribuicao-poisson","Distribuição de Poisson"],["distribuicao-t","Distribuição t de Student"],
       ["distribuicao-qui","Distribuição Qui-Quadrado"],["distribuicao-f","Distribuição F de Snedecor"],
+      ["tabela-normal","Tabela Normal (Z)"],["gerador-aleatorios","Gerador de Números Aleatórios"],
     ]],
     ["Inferência", [
       ["intervalo-confianca-media","Intervalo de Confiança (Média)"],["tamanho-amostra","Tamanho de Amostra"],
@@ -27,20 +29,25 @@
       ["teste-t-pareado","Teste t Pareado"],["qui-quadrado","Qui-Quadrado"],["anova","ANOVA (1 Fator)"],
       ["correlacao-pearson","Correlação de Pearson"],["regressao-linear","Regressão Linear Simples"],
       ["regressao-logistica","Regressão Logística"],
+      ["teste-normalidade","Teste de Normalidade"],["teste-homocedasticidade","Teste de Homocedasticidade"],
+      ["teste-exato-fisher","Teste Exato de Fisher"],["testes-z-proporcoes","Testes Z para Proporções"],
+      ["tamanho-efeito","Tamanho do Efeito (Effect Size)"],["spearman","Correlação de Spearman"],
     ]],
     ["Não Paramétricos", [
       ["wilcoxon","Teste de Wilcoxon"],["mann-whitney","Teste de Mann-Whitney"],
       ["kruskal-wallis","Teste de Kruskal-Wallis"],["friedman","Teste de Friedman"],
-      ["spearman","Correlação de Spearman"],
+      ["spearman","Correlação de Spearman"],["qui-quadrado","Qui-Quadrado"],
+      ["teste-exato-fisher","Teste Exato de Fisher"],
     ]],
     ["Multivariada", [
       ["matriz-correlacao","Matriz de Correlação"],["pca","Componentes Principais (PCA)"],
-      ["regressao-multipla","Regressão Múltipla"],
+      ["regressao-multipla","Regressão Múltipla"],["regressao-linear","Regressão Linear Simples"],
+      ["alfa-cronbach","Alfa de Cronbach"],
     ]],
     ["Outras Ferramentas", [
       ["epidemiologia-2x2","Epidemiologia 2x2"],["alfa-cronbach","Alfa de Cronbach"],
       ["gerador-aleatorios","Gerador de Números Aleatórios"],["tabela-normal","Tabela Normal (Z)"],
-      ["conversor-dados","Conversor de Dados"],
+      ["conversor-dados","Conversor de Dados"],["teste-normalidade","Teste de Normalidade"],
     ]],
   ];
   global.GROUPS = GROUPS;

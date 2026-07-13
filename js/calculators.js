@@ -617,6 +617,178 @@
     }
   };
 
+  /* =========================== NOVAS CALCULADORAS =========================== */
+  R["media-geometrica-harmonica"] = {
+    inputs: [{ id: "dados", label: "Números", type: "numbers", placeholder: "Ex.: 2; 4; 8; 16", hint: "Os valores devem ser estritamente positivos (>0)." }],
+    compute: function (v) {
+      var d = v.dados; need(d, 1);
+      var g = Stats.geometricMean(d);
+      var h = Stats.harmonicMean(d);
+      var stats = [
+        ["Média Geométrica", f(g)],
+        ["Média Harmônica", f(h)],
+        ["Média Aritmética", f(Stats.mean(d))],
+        ["Quantidade (n)", String(d.length)]
+      ];
+      return { stats: stats, md: { title: "Média Geométrica e Harmônica", lines: mdLines(stats) } };
+    }
+  };
+
+  R["teste-homocedasticidade"] = {
+    inputs: [
+      { id: "a", label: "Amostra 1", type: "numbers", placeholder: "Ex.: 10; 12; 15; 11; 14" },
+      { id: "b", label: "Amostra 2", type: "numbers", placeholder: "Ex.: 14; 16; 18; 12; 15" }
+    ],
+    compute: function (v) {
+      var a = v.a, b = v.b; need(a, 2); need(b, 2);
+      var r = Stats.fTestTwoVariances(a, b);
+      var stats = [
+        ["Estatística F", f(r.F)],
+        ["gl Numerador", String(r.df1)],
+        ["gl Denominador", String(r.df2)],
+        ["p-valor", fp(r.pValue)],
+        ["Variância Amostra 1", f(Stats.variance(a, false))],
+        ["Variância Amostra 2", f(Stats.variance(b, false))],
+        ["Decisão (α=0,05)", decide(r.pValue, 0.05)]
+      ];
+      return { stats: stats, notes: ["Teste F de igualdade de duas variâncias. Pressupõe que ambas as populações são normalmente distribuídas."], md: { title: "Teste de Homocedasticidade (Teste F)", lines: mdLines(stats) } };
+    }
+  };
+
+  R["teste-exato-fisher"] = {
+    inputs: [
+      { id: "a", label: "a (Grupo 1 & Desfecho+)", type: "number", default: "2" },
+      { id: "b", label: "b (Grupo 1 & Desfecho-)", type: "number", default: "8" },
+      { id: "c", label: "c (Grupo 2 & Desfecho+)", type: "number", default: "9" },
+      { id: "d", label: "d (Grupo 2 & Desfecho-)", type: "number", default: "3" }
+    ],
+    compute: function (v) {
+      var a = v.a, b = v.b, c = v.c, d = v.d;
+      if ([a, b, c, d].some(function (x) { return !(x >= 0) || !isFinite(x); })) throw new Error("Informe as 4 frequências (≥0).");
+      var r = Stats.fisherExact(a, b, c, d);
+      var stats = [
+        ["p-valor (Bilateral)", fp(r.pValue)],
+        ["Prob. da tabela observada", fp(r.observedP)],
+        ["Total (N)", String(a + b + c + d)]
+      ];
+      var tab = { caption: "Tabela de Contingência Observada", headers: ["", "Desfecho+", "Desfecho-", "Total"], rows: [["Grupo 1", String(a), String(b), String(a + b)], ["Grupo 2", String(c), String(d), String(c + d)], ["Total", String(a + c), String(b + d), String(a + b + c + d)]], rowHeader: true };
+      return { stats: stats, tables: [tab], notes: ["Ideal para tabelas 2x2 com pequenas frequências esperadas onde a aproximação qui-quadrado não é recomendada."], md: { title: "Teste Exato de Fisher", lines: mdLines(stats) } };
+    }
+  };
+
+  R["teste-normalidade"] = {
+    inputs: [
+      { id: "dados", label: "Amostra de dados", type: "numbers", placeholder: "Ex.: 10; 12; 15; 11; 14; 13; 12; 11; 15; 14" },
+      { id: "modo", label: "Tipo de Teste", type: "select", default: "lilliefors", options: [["lilliefors", "Parâmetros estimados da amostra"], ["user", "Parâmetros definidos pelo usuário"]] },
+      { id: "mu", label: "Média hipotética (se definido pelo usuário)", type: "number", default: "0" },
+      { id: "sigma", label: "Desvio padrão hipotético (se definido pelo usuário)", type: "number", default: "1" }
+    ],
+    compute: function (v) {
+      var d = v.dados; need(d, 3);
+      var mu = v.mu, sigma = v.sigma;
+      var est = v.modo === "lilliefors";
+      if (est) {
+        mu = Stats.mean(d);
+        sigma = Stats.sd(d, false);
+      }
+      if (sigma <= 0) throw new Error("O desvio padrão deve ser maior que zero.");
+      var r = Stats.kolmogorovSmirnov(d, mu, sigma);
+      var decision = r.pValue < 0.05 ? "Rejeita H₀ (Dados não normais)" : "Não rejeita H₀ (Dados aproximadamente normais)";
+      var stats = [
+        ["Estatística D (KS)", f(r.D)],
+        ["p-valor (asintótico)", fp(r.pValue)],
+        ["Média utilizada", f(r.mean)],
+        ["Desvio padrão utilizado", f(r.sd)],
+        ["Decisão (α=0,05)", decision]
+      ];
+      var notes = ["O teste de Kolmogorov-Smirnov padrão assume parâmetros conhecidos a priori. Ao estimar a média e desvio padrão da amostra, o teste se torna conservador (o Lilliefors é o ajuste ideal)."];
+      return { stats: stats, notes: notes, md: { title: "Teste de Normalidade (Kolmogorov-Smirnov)", lines: mdLines(stats) } };
+    }
+  };
+
+  R["testes-z-proporcoes"] = {
+    inputs: [
+      { id: "tipo", label: "Tipo de teste", type: "select", default: "one", options: [["one", "1 Proporção (observado vs referência)"], ["two", "2 Proporções (duas amostras)"]] },
+      { id: "x1", label: "Sucessos (x1) - Amostra 1", type: "number", default: "15" },
+      { id: "n1", label: "Tentativas (n1) - Amostra 1", type: "number", default: "50" },
+      { id: "x2", label: "Sucessos (x2) - Amostra 2 (para 2 proporções)", type: "number", default: "25" },
+      { id: "n2", label: "Tentativas (n2) - Amostra 2 (para 2 proporções)", type: "number", default: "60" },
+      { id: "p0", label: "Proporção de referência (p0 - para 1 proporção)", type: "number", default: "0.5" }
+    ],
+    compute: function (v) {
+      var x1 = parseInt(v.x1, 10), n1 = parseInt(v.n1, 10);
+      var stats;
+      if (v.tipo === "one") {
+        var p0 = parseFloat(v.p0);
+        var r1 = Stats.zTestOneProportion(x1, n1, p0);
+        stats = [
+          ["Proporção amostral (p̂)", f(r1.pHat)],
+          ["Estatística Z", f(r1.z)],
+          ["p-valor", fp(r1.pValue)],
+          ["IC 95% Inferior (Wilson)", f(r1.lower)],
+          ["IC 95% Superior (Wilson)", f(r1.upper)],
+          ["Decisão (α=0,05)", decide(r1.pValue, 0.05)]
+        ];
+      } else {
+        var x2 = parseInt(v.x2, 10), n2 = parseInt(v.n2, 10);
+        var r2 = Stats.zTestTwoProportions(x1, n1, x2, n2);
+        stats = [
+          ["Proporção 1 (p̂1)", f(r2.p1)],
+          ["Proporção 2 (p̂2)", f(r2.p2)],
+          ["Diferença (p̂1 - p̂2)", f(r2.diff)],
+          ["Estatística Z", f(r2.z)],
+          ["p-valor", fp(r2.pValue)],
+          ["IC 95% Diferença Inferior", f(r2.lower)],
+          ["IC 95% Diferença Superior", f(r2.upper)],
+          ["Decisão (α=0,05)", decide(r2.pValue, 0.05)]
+        ];
+      }
+      return { stats: stats, notes: ["Utiliza a aproximação normal. Para amostras pequenas de proporções, considere o Teste Exato de Fisher."], md: { title: "Testes Z para Proporções", lines: mdLines(stats) } };
+    }
+  };
+
+  R["tamanho-efeito"] = {
+    inputs: [
+      { id: "tipo", label: "Métrica / Desenho", type: "select", default: "two", options: [
+        ["one", "d de Cohen (1 Amostra vs Referência)"],
+        ["two", "d de Cohen (2 Amostras Independentes)"],
+        ["paired", "d de Cohen (Amostras Pareadas / Diferença)"],
+        ["anova", "Eta-quadrado - η² (para ANOVA de 1 fator)"]
+      ]},
+      { id: "m1", label: "Média 1 (ou Média da Diferença / Amostra)", type: "number", default: "15" },
+      { id: "sd1", label: "Desvio Padrão 1 (ou Desvio da Diferença / Amostra)", type: "number", default: "3" },
+      { id: "n1", label: "Tamanho da Amostra 1 (opcional para pareado/1 amostra)", type: "number", default: "30" },
+      { id: "m2", label: "Média 2 (ou Referência μ₀)", type: "number", default: "12" },
+      { id: "sd2", label: "Desvio Padrão 2 (não usado para pareado/1 amostra)", type: "number", default: "4" },
+      { id: "n2", label: "Tamanho da Amostra 2 (não usado para pareado/1 amostra)", type: "number", default: "30" },
+      { id: "ssb", label: "Soma de Quadrados Entre grupos (SQEntre - apenas p/ ANOVA)", type: "number", default: "25" },
+      { id: "sst", label: "Soma de Quadrados Total (SQTotal - apenas p/ ANOVA)", type: "number", default: "100" }
+    ],
+    compute: function (v) {
+      var stats, val, interp;
+      if (v.tipo === "one") {
+        val = Stats.cohensDOneSample(parseFloat(v.m1), parseFloat(v.m2), parseFloat(v.sd1));
+        interp = val < 0.2 ? "efeito negligenciável" : val < 0.5 ? "efeito pequeno" : val < 0.8 ? "efeito médio" : "efeito grande";
+        stats = [["d de Cohen", f(val)], ["Interpretação", interp]];
+      } else if (v.tipo === "two") {
+        val = Stats.cohensDTwoSamples(parseFloat(v.m1), parseFloat(v.sd1), parseInt(v.n1,10), parseFloat(v.m2), parseFloat(v.sd2), parseInt(v.n2,10));
+        interp = val < 0.2 ? "efeito negligenciável" : val < 0.5 ? "efeito pequeno" : val < 0.8 ? "efeito médio" : "efeito grande";
+        stats = [["d de Cohen (pooled)", f(val)], ["Interpretação", interp]];
+      } else if (v.tipo === "paired") {
+        val = Stats.cohensDPaired(parseFloat(v.m1), parseFloat(v.sd1));
+        interp = val < 0.2 ? "efeito negligenciável" : val < 0.5 ? "efeito pequeno" : val < 0.8 ? "efeito médio" : "efeito grande";
+        stats = [["d de Cohen (pareado)", f(val)], ["Interpretação", interp]];
+      } else {
+        var ssb = parseFloat(v.ssb), sst = parseFloat(v.sst);
+        if (ssb > sst) throw new Error("A Soma de Quadrados Entre (SQEntre) não pode ser maior que a Soma de Quadrados Total (SQTotal).");
+        val = Stats.etaSquared(ssb, sst);
+        interp = val < 0.01 ? "efeito negligenciável" : val < 0.06 ? "efeito pequeno" : val < 0.14 ? "efeito médio" : "efeito grande";
+        stats = [["Eta-quadrado (η²)", f(val)], ["Interpretação", interp]];
+      }
+      return { stats: stats, notes: ["Corte referencial para Cohen (1988): Pequeno (~0,2), Médio (~0,5), Grande (~0,8). Para Eta-quadrado: Pequeno (~0,01), Médio (~0,06), Grande (~0,14)."], md: { title: "Tamanho do Efeito (Effect Size)", lines: mdLines(stats) } };
+    }
+  };
+
   /* tabela em Markdown (helper local) */
   function U_mdTable(headers, rows) {
     var md = "| " + headers.join(" | ") + " |\n|" + headers.map(function () { return "---"; }).join("|") + "|\n";
